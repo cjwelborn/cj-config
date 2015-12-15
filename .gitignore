@@ -1,0 +1,16 @@
+# ignore various junk/non-relavent files automatically in git.
+*~
+.metadata
+target/
+.project
+.pydevproject
+*.kdev4*
+*.layout
+*.depends
+*.log
+*.tmp
+*Secret*
+*secret*
+*SECRET*
+*.bak
+__pycache__

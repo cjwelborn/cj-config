@@ -1,0 +1,51 @@
+[user]
+	name = Christopher Welborn
+	email = cj@welbornprod.com
+[push]
+	default = matching
+[branch]
+	autosetuprebase = always
+[color]
+	status = auto
+	branch = auto
+	ui = auto
+[core]
+	excludesfile = /home/cj/.gitignore
+[giggle]
+	main-window-maximized = false
+	main-window-geometry = 858x619+355+65
+	history-view-vpane-position = 263
+	file-view-vpane-position = 529
+	main-window-view = HistoryView
+[alias]
+	add-commit = !git add . -A && git commit
+
+	commit-tracked = commit -am
+	ct = commit -am
+
+	commit-longmsg = !git commit -a
+	cl = commit -a
+
+	makedev = !git branch dev && git checkout dev
+
+
+    last-commit = show --pretty=oneline
+	last-commits = !git log --pretty=oneline | head
+	show-commits = log --pretty=oneline
+
+	pushsite = !echo "Pushing to wp_site dev..." && git push wp_site dev
+	pushwp = !echo "Pushing to welbornprod dev..." && git push welbornprod dev
+	co = checkout
+	stat = status
+	s = status
+	p = push
+
+
+[credential "https://github.com/welbornprod/wp_site.git"]
+    username=cjwelborn
+[credential "https://github.com/cjwelborn"]
+    username=cjwelborn
+[credential "https://github.com"]
+    username=cjwelborn
+[diff]
+	tool = meld
