@@ -11,21 +11,22 @@
 # Save globals list, for reporting custom startup funcs later.
 __existing = set(dir())
 
-import atexit
-import readline
-import rlcompleter
+import atexit       # noqa
+import readline     # noqa
+import rlcompleter  # noqa
 
 # Modules that will be available every time the interpreter starts.
-import sys  # noqa
+import sys                     # noqa
 from datetime import datetime  # noqa
-import json  # noqa
-import os
-import platform  # noqa
-import re  # noqa
-import time  # noqa
+import importlib               # noqa
+import json                    # noqa
+import os                      # noqa
+import platform                # noqa
+import re                      # noqa
+import time                    # noqa
 
 
-# Setup history ---------------------------------------------------------------
+# Setup history --------------------------------------------------------------
 historyPath = os.path.expanduser('~/.pyhistory')
 
 
@@ -66,7 +67,7 @@ atexit.register(save_history)
 # Enable auto-complete for variable names and modules
 readline.parse_and_bind('tab: complete')
 
-# Cj's colorizer for linux, will persist. -------------------------------------
+# Cj's colorizer for linux, will persist. ------------------------------------
 # Uses the colr module, but will fall back to the old ColorCodes class.
 try:
     from colr import color, Colr as C  # noqa
@@ -159,7 +160,9 @@ except ImportError:
     # interpreter.
     color = C = ColorCodes().colorword
 
-# Globals that will persist ---------------------------------------------------
+# Globals that will persist --------------------------------------------------
+SCRIPTS = '/home/cj/scripts'
+
 RAGESTR = ''.join((
     str(C('(╯°□°)╯', fore='blue')),
     '︵',
@@ -180,20 +183,66 @@ RAGE = Rager()
 
 
 # Functions that will persist.
+def compile_file(filename):
+    """ Compiles a module by file name, and returns the code object.
+        You can `exec()` the object in the global scope to 'source' it.
+
+        Scripts are executed as if they were ran from the command line,
+        as in __name__ == '__main__'.
+    """
+    with open(filename, 'r') as f:
+        return compile(f.read(), filename, 'exec')
+
+
+def compile_script(filename):
+    """ Compiles a module found in SCRIPTS dir, and returns the code object.
+        You can `exec()` the object in the global scope to 'source' it.
+
+        Scripts are executed as if they were ran from the command line,
+        as in __name__ == '__main__'.
+    """
+    if os.path.exists(filename):
+        return compile_file(filename)
+    scriptdir = os.path.join(SCRIPTS, filename)
+    if os.path.exists(scriptdir):
+        return compile_file(scriptdir)
+    raise FileNotFoundError('Cannot find this file: {}'.format(filename))
+
+
 def import_scripts(path=None):
     """ Add /home/cj/scripts to sys.path. """
-    scriptdir = '/home/cj/scripts'
-    path = os.path.join(scriptdir, path) if path else scriptdir
+    path = os.path.join(SCRIPTS, path) if path else scriptdir
     sys.path.insert(1, path)
     sys.stdout.write('\nNew import path: {}\n'.format(path))
 
 
+def import_script(path):
+    """ Import a module from my the SCRIPTS directory.
+        The module will be placed in the global scope.
+    """
+    modpath, filename = os.path.split(path)
+    modname = os.path.splitext(filename)[0]
+    import_scripts(modpath)
+    try:
+        modl = importlib.import_module(modname)
+    except ImportError as ex:
+        sys.stderr.write('\nFailed to import `{}`: {}\n'.format(modname, ex))
+    else:
+        globals()[modname] = modl
+        sys.stdout.write('\nImported module: {}\n'.format(modname))
+
+
 def printa(o, private=False):
     """ Print all attributes for an object. """
-    print(color(
-        '{}:'.format(getattr(o, '__name__', getattr(o.__class__, '__name__'))),
-        fore='blue',
-        style='bright'))
+    print(
+        color(
+            '{}:'.format(
+                getattr(o, '__name__', getattr(o.__class__, '__name__'))
+            ),
+            fore='blue',
+            style='bright'
+        )
+    )
     for a in dir(o):
         if (not private) and a.startswith('_'):
             continue
@@ -237,7 +286,7 @@ def printp(d, indent=0):
     else:
         print('{}{}'.format(' ' * indent, d))
 
-# Set the prompt text. PS1 is the main prompt, PS2 is continuations.. ---------
+# Set the prompt text. PS1 is the main prompt, PS2 is continuations.. --------
 sys.ps1 = '>>> '
 sys.ps2 = '... '
 # Use color prompts when available.

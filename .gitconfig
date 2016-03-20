@@ -6,11 +6,12 @@
 [branch]
 	autosetuprebase = always
 [color]
-	status = auto
-	branch = auto
-	ui = auto
+	status = always
+	branch = always
+	ui = always
 [core]
 	excludesfile = /home/cj/.gitignore
+	editor = vim
 [giggle]
 	main-window-maximized = false
 	main-window-geometry = 858x619+355+65
@@ -18,34 +19,31 @@
 	file-view-vpane-position = 529
 	main-window-view = HistoryView
 [alias]
-	add-commit = !git add . -A && git commit
-
 	commit-tracked = commit -am
 	ct = commit -am
 
-	commit-longmsg = !git commit -a
+	commit-longmsg = commit -a
 	cl = commit -a
 
-	makedev = !git branch dev && git checkout dev
+	makedev = !git checkout -b dev
 
 
     last-commit = show --pretty=oneline
 	last-commits = !git log --pretty=oneline | head
 	show-commits = log --pretty=oneline
 
-	pushsite = !echo "Pushing to wp_site dev..." && git push wp_site dev
-	pushwp = !echo "Pushing to welbornprod dev..." && git push welbornprod dev
 	co = checkout
 	stat = status
 	s = status
 	p = push
+	# These are only here because my keyboard isn't that great.
+	sta = status
+	st = status
+	tags = tag -l -n1
 
 
-[credential "https://github.com/welbornprod/wp_site.git"]
-    username=cjwelborn
-[credential "https://github.com/cjwelborn"]
-    username=cjwelborn
 [credential "https://github.com"]
-    username=cjwelborn
+	username=cjwelborn
+
 [diff]
 	tool = meld
