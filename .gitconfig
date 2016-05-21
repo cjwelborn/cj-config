@@ -40,6 +40,7 @@
 	sta = status
 	st = status
 	tags = tag -l -n1
+	diffstat = diff --stat
 
 
 [credential "https://github.com"]
