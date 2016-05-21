@@ -6,7 +6,7 @@
 set nocompatible
 
 
-" Normal config here. ---------------------------------------------------------
+" Normal config here. --------------------------------------------------------
 filetype plugin indent on
 set modeline
 " No word wrapping.
@@ -17,7 +17,7 @@ set nowrap
 :set splitbelow
 :set splitright
 
-" Load packages with pathogen -------------------------------------------------
+" Load packages with pathogen ------------------------------------------------
 " Include the powerline binding directory.
 execute pathogen#infect('bundle/{}', 'bundle/powerline/powerline/bindings/{}')
 
@@ -55,14 +55,17 @@ execute pathogen#infect('bundle/{}', 'bundle/powerline/powerline/bindings/{}')
 :map  <C-h> :tabp<CR>
 :map  <C-n> :tabnew<CR>
 
-" Color scheme (vim-colors-solarized) -----------------------------------------
+" Color scheme (vim-colors-solarized) ----------------------------------------
 let g:solarized_termcolors=256
 let g:solarized_termtrans=1
 syntax enable
 colorscheme solarized
 set background=dark
 
-" For line width --------------------------------------------------------------
+" Explicit syntax file types -------------------------------------------------
+au BufNewFile,BufRead *_sudoers_* set filetype=sudoers
+
+" For line width -------------------------------------------------------------
 augroup line_width
 	autocmd!
         " Highlight characters past column 79
@@ -74,7 +77,7 @@ augroup end
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
 
-" NERDTree Config -------------------------------------------------------------
+" NERDTree Config ------------------------------------------------------------
 " NERDTree, show hidden files by default.
 let g:NERDTreeShowHidden=1
 
@@ -87,14 +90,14 @@ augroup nerd_tree
 	autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 augroup end
 
-" For powerline ---------------------------------------------------------------
+" For powerline --------------------------------------------------------------
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
 set laststatus=2
 
-" For python-mode (disabling in favor of jedi-vim). --------------------------X
+" For python-mode (disabling in favor of jedi-vim). --------------------------
 " let g:pymode_syntax_print_as_function = 1
 
-" For jedi-vim ----------------------------------------------------------------
+" For jedi-vim ---------------------------------------------------------------
 " This is set to 1 by default,
 " but I am keeping it here in case I need to disable it.
 let g:jedi#auto_initialization = 1
@@ -104,7 +107,7 @@ let g:jedi#show_call_signatures = "1"
 let g:jedi#completions_enabled = 1
 " Disable preview window
 :set completeopt-=preview
-"" Auto-close preview window.
+" Auto-close preview window.
 "augroup PreviewOnBottom
 "    autocmd InsertEnter * set splitbelow
 "    autocmd InsertLeave * set splitbelow!
