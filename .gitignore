@@ -14,3 +14,4 @@ target/
 *SECRET*
 *.bak
 __pycache__
+*.pyc
