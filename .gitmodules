@@ -1,0 +1,31 @@
+[submodule "jedi-vim"]
+    path = .vim/bundle/jedi-vim
+    url = https://github.com/davidhalter/jedi-vim.git
+
+[submodule "nerdtree"]
+    path = .vim/bundle/nerdtree
+    url = https://github.com/scrooloose/nerdtree
+
+[submodule "rust.vim"]
+    path = .vim/bundle/rust.vim
+    url = https://github.com/wting/rust.vim.git
+
+[submodule "vim-colors-soloarized"]
+    path = .vim/bundle/vim-colors-solarized
+    url = https://github.com/altercation/vim-colors-solarized
+
+[submodule "vim-fugitive"]
+    path = .vim/bundle/vim-fugitive
+    url = git://github.com/tpope/vim-fugitive.git
+
+[submodule "vim-powerline"]
+    path = .vim/bundle/vim-powerline
+    url = https://github.com/Lokaltog/vim-powerline.git
+
+[submodule "vim-sensible"]
+    path = .vim/bundle/vim-sensible
+    url = git://github.com/tpope/vim-sensible.git
+
+[submodule "vundle"]
+    path = .vim/bundle/vundle
+    url = https://github.com/gmarik/vundle.git
