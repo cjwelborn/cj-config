@@ -12,10 +12,12 @@ set modeline
 " No word wrapping.
 set nowrap
 " For gvim, follow mouse focus.
-:set mousefocus
+set mousefocus
 " Where to place split windows.
-:set splitbelow
-:set splitright
+set splitbelow
+set splitright
+" Show line numbers always.
+set number
 
 " Load packages with pathogen ------------------------------------------------
 " Include the powerline binding directory.
@@ -64,6 +66,7 @@ set background=dark
 
 " Explicit syntax file types -------------------------------------------------
 au BufNewFile,BufRead *_sudoers_* set filetype=sudoers
+au BufNewFile,BufRead .pystartup set filetype=python
 
 " For line width -------------------------------------------------------------
 augroup line_width
