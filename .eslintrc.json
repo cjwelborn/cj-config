@@ -1,34 +1,62 @@
 {
+    // Use recommended defaults, unless overridden below.
+    "extends": "eslint:recommended",
     "rules": {
-        "no-invalid-regexp": 1,
-        "no-empty": 1,
-        "no-native-reassign": 1,
-        "no-mixed-spaces-and-tabs": 2,
+        "no-invalid-regexp": "error",
+        // No empty blocks.
+        "no-empty": "error",
+        "no-native-reassign": "error",
+        "no-mixed-spaces-and-tabs": "error",
+        "no-unreachable": "error",
+        // Variables should be defined before using (except func hoisting).
+        "no-use-before-define": "error",
+        // Do not shadow variables in the outer scope.
+        "no-shadow": [
+            "error",
+            {
+                // Common for-loop-vars/lambda-args.
+                "allow": ["a", "b", "c", "i", "j", "k", "x", "y", "z"],
+                // Never shadow builtins.
+                "builtinGlobals": true,
+                // Check shadowing before definition.
+                "hoist": "functions"
+            }
+        ],
+        // Always use a trailing comma on multiline arrays/args/objects.
+        "comma-dangle": [
+            "error",
+            "always-multiline"
+        ],
+        // Always indent with 4 spaces.
         "indent": [
-            2,
+            "error",
             4
         ],
+        // Always use single quotes.
         "quotes": [
-            2,
+            "error",
             "single"
         ],
         "linebreak-style": [
-            2,
+            "error",
             "unix"
         ],
+        // Always require a semi-colon.
         "semi": [
-            2,
+            "error",
             "always"
         ],
-        "no-console": 0
+        // Allow console usage (it's barely used anyway).
+        "no-console": "off"
     },
+    // Environments that cover most of my projects.
     "env": {
         "es6": true,
         "node": true,
         "browser": true,
         "jquery": true
     },
-    "extends": "eslint:recommended",
+    // Lint inside html files.
     "plugins": [
         "html"
     ]
