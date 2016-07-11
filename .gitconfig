@@ -41,6 +41,9 @@
 	st = status
 	tags = tag -l -n1
 	diffstat = diff --stat
+	search = log --pretty=oneline -S
+	rsearch = log --pretty=oneline -G
+	lsearch = log --pretty=oneline -L
 
 
 [credential "https://github.com"]
