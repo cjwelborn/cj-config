@@ -67,8 +67,13 @@ atexit.register(save_history)
 # Enable auto-complete for variable names and modules
 readline.parse_and_bind('tab: complete')
 
+
 # Cj's colorizer for linux, will persist. ------------------------------------
 # Uses the colr module, but will fall back to the old ColorCodes class.
+def noop_color(text=None, fore=None, back=None, style=None):
+    """  A function that does nothing, to disable color() and C(). """
+    return text
+
 try:
     from colr import color, Colr as C  # noqa
 except ImportError:
@@ -160,6 +165,10 @@ except ImportError:
     # interpreter.
     color = C = ColorCodes().colorword
 
+# Remove color functions if running in bpython (trips on escape codes).
+if __name__ == '__console__':
+    color = C = noop_color
+
 # Globals that will persist --------------------------------------------------
 SCRIPTS = '/home/cj/scripts'
 
@@ -249,11 +258,13 @@ def printa(o, private=False):
         try:
             val = getattr(o, a)
             val = getattr(val, '__doc__', '').strip() or val
-        except Exception as ex:
+        except AttributeError as ex:
             val = '<Unable to get value: {}>'.format(ex)
-        print('    {}: {}'.format(
+        valstr = str(val)
+        print('{}    {}: {}'.format(
+            '\n' if '\n' in valstr else '',
             color(a, fore='cyan'),
-            color(str(val), fore='green')))
+            color(valstr, fore='green')))
 
 
 def printc(s, fore=None, back=None, style=None):
