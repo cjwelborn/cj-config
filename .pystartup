@@ -11,8 +11,10 @@
 # Save globals list, for reporting custom startup funcs later.
 __existing = set(dir())
 
-import atexit       # noqa
-import readline     # noqa
+import atexit                  # noqa
+import readline                # noqa
+from functools import partial  # noqa
+
 # Modules that will be available every time the interpreter starts.
 import sys                     # noqa
 from datetime import datetime  # noqa
@@ -228,10 +230,9 @@ def __enable_pprint():
         print('\nUsing pygments to highlight tracebacks.')
     return pphighlight
 
+
 # Try enabling pygments tracebacks, set pretty-print function.
-from functools import partial
 pp = partial(__enable_pprint(), width=1)
-del partial
 
 # Remove color functions if running in bpython (trips on escape codes).
 if __name__ == '__console__':
@@ -354,7 +355,7 @@ sys.ps2 = '... '
 #     sys.ps2 = color(sys.ps2, fore='blue')
 
 # Delete these so they won't automatically be available on startup.
-del atexit, save_history, historyPath, readline
+del atexit, historyPath, partial, readline, save_history
 
 try:
     del rlcompleter
