@@ -13,8 +13,6 @@ __existing = set(dir())
 
 import atexit       # noqa
 import readline     # noqa
-import rlcompleter  # noqa
-
 # Modules that will be available every time the interpreter starts.
 import sys                     # noqa
 from datetime import datetime  # noqa
@@ -25,23 +23,37 @@ import platform                # noqa
 import re                      # noqa
 import time                    # noqa
 
+try:
+    # TODO: Figure out how this is better than the normal method.
+    from jedi.utils import setup_readline as jedi_setup_readline
+    from jedi import __version__ as __jedi_version__
+except ImportError:
+    # No jedi available.
+    import rlcompleter  # noqa
+    # Enable auto-complete for variable names and modules
+    readline.parse_and_bind('tab: complete')
+    print('\nUsing readline for completion.')
+else:
+    jedi_setup_readline()
+    print('\nUsing Jedi {} for completion.'.format(__jedi_version__))
 
-# Setup history --------------------------------------------------------------
 historyPath = os.path.expanduser('~/.pyhistory')
+# Read history on load.
+if os.path.exists(historyPath):
+    readline.read_history_file(historyPath)
 
 
-def __gethistory():
+def __gethistory(historypath=historyPath):
     """ Print the lines in the history file. """
-    historyPath = os.path.expanduser('~/.pyhistory')
-    if os.path.isfile(historyPath):
+    if os.path.isfile(historypath):
         try:
-            with open(historyPath, 'r') as f:
+            with open(historypath, 'r') as f:
                 return [l.rstrip() for l in f.readlines()]
         except EnvironmentError as ex:
             errfmt = '\nUnable to read history file: {}\n{}'
-            print(errfmt.format(historyPath, ex))
+            print(errfmt.format(historypath, ex))
             return []
-    print('\nNo history file found: {}'.format(historyPath))
+    print('\nNo history file found: {}'.format(historypath))
     return []
 
 
@@ -54,18 +66,12 @@ def __printhistory():
         print('\nNo history to print.')
 
 
-def save_history(historyPath=historyPath):
+def save_history(historypath=historyPath):
     import readline
-    readline.write_history_file(historyPath)
-
-if os.path.exists(historyPath):
-    readline.read_history_file(historyPath)
+    readline.write_history_file(historypath)
 
 # Register save-history on exit.
 atexit.register(save_history)
-
-# Enable auto-complete for variable names and modules
-readline.parse_and_bind('tab: complete')
 
 
 # Cj's colorizer for linux, will persist. ------------------------------------
@@ -164,6 +170,68 @@ except ImportError:
     # We are using these now, but also keeping them around for use in the
     # interpreter.
     color = C = ColorCodes().colorword
+
+
+# Use pygments to highlight tracebacks, if available, otherwise use pprint.
+def __enable_pprint():
+    """Enable pretty printing of evaluated expressions"""
+    import pprint
+    try:
+        # Python 2.
+        from cStringIO import StringIO
+    except ImportError:
+        # Python 3.
+        from io import StringIO
+    try:
+        from pygments import highlight
+        from pygments.lexers import PythonLexer, PythonTracebackLexer
+        from pygments.formatters import TerminalFormatter
+    except ImportError:
+        # No pygments to use, pphighlight will be pprint.
+        pphighlight = pprint.pprint
+        print('\nNo pygments, tracebacks will not be highlighted.')
+        print('...pphighlight function is available.')
+    else:
+        # Use pygments for the excepthook message (tracebacks).
+        def pphighlight(o, *a, **kw):
+            s = pprint.pformat(o, *a, **kw)
+            try:
+                sys.stdout.write(
+                    highlight(s, PythonLexer(), TerminalFormatter()))
+            except UnicodeError:
+                sys.stdout.write(s)
+                sys.stdout.write('\n')
+
+        # Override old excepthook with the prettier one.
+        _old_excepthook = sys.excepthook
+
+        def excepthook(exctype, value, traceback):
+            """Prints exceptions to sys.stderr and colorizes them"""
+
+            # traceback.format_exception() isn't used because it's
+            # inconsistent with the builtin formatter
+            old_stderr = sys.stderr
+            sys.stderr = StringIO()
+            try:
+                _old_excepthook(exctype, value, traceback)
+                s = sys.stderr.getvalue()
+                try:
+                    s = highlight(
+                        s, PythonTracebackLexer(), TerminalFormatter())
+                except UnicodeError:
+                    pass
+                old_stderr.write(s)
+            finally:
+                sys.stderr = old_stderr
+
+        sys.excepthook = excepthook
+        print('\nUsing pygments to highlight tracebacks.')
+    return pphighlight
+
+# Try enabling pygments tracebacks, set pretty-print function.
+from functools import partial
+pp = partial(__enable_pprint(), width=1)
+del partial
 
 # Remove color functions if running in bpython (trips on escape codes).
 if __name__ == '__console__':
@@ -272,30 +340,9 @@ def printc(s, fore=None, back=None, style=None):
     print(color(s, fore=fore, back=back, style=style))
 
 
-def printjson(o, sort_keys=False):
-    """ Shortcut to print(json.dumps(o, indent=4, sort_keys=sort_keys)) """
-    print(json.dumps(o, indent=4, sort_keys=sort_keys))
-
-
-def printp(d, indent=0):
+def printp(o, indent=None, sort_keys=False):
     """ Print a dict/list/tuple, with pretty formatting. """
-    if isinstance(d, dict):
-        for k, v in d.items():
-            print('{}{}:'.format(' ' * indent, k))
-            if isinstance(v, dict):
-                printp(v, indent=indent + 4)
-            elif isinstance(v, (list, tuple)):
-                printp(v, indent=indent + 4)
-            else:
-                print('{}{}'.format(' ' * (indent + 4), v))
-    elif isinstance(d, (list, tuple)):
-        for itm in d:
-            if isinstance(itm, (list, tuple)):
-                printp(itm, indent=indent + 4)
-            else:
-                print('{}{}'.format(' ' * indent, d))
-    else:
-        print('{}{}'.format(' ' * indent, d))
+    print(json.dumps(o, indent=indent or 4, sort_keys=sort_keys))
 
 # Set the prompt text. PS1 is the main prompt, PS2 is continuations.. --------
 sys.ps1 = '>>> '
@@ -307,7 +354,17 @@ sys.ps2 = '... '
 #     sys.ps2 = color(sys.ps2, fore='blue')
 
 # Delete these so they won't automatically be available on startup.
-del atexit, readline, rlcompleter, save_history, historyPath
+del atexit, save_history, historyPath, readline
+
+try:
+    del rlcompleter
+except NameError:
+    pass
+try:
+    del jedi_setup_readline
+    del __jedi_version__
+except NameError:
+    pass
 
 
 def preloads():
