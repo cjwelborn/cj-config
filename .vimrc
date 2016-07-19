@@ -18,6 +18,10 @@ set splitbelow
 set splitright
 " Show line numbers always.
 set number
+" Use a tabwidth of 4.
+" shiftwidth, smarttab, expandtab, etc. are set with vim-sleuth.
+" vim-sleuth will use this as a preference for hard-tabs.
+set tabstop=4
 
 " Load packages with pathogen ------------------------------------------------
 " Include the powerline binding directory.
