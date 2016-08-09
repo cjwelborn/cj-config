@@ -18,6 +18,8 @@ set splitbelow
 set splitright
 " Show line numbers always.
 set number
+" Use BASH for the shell, always.
+set shell=/bin/bash
 " Use a tabwidth of 4.
 " shiftwidth, smarttab, expandtab, etc. are set with vim-sleuth.
 " vim-sleuth will use this as a preference for hard-tabs.
