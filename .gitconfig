@@ -51,3 +51,6 @@
 
 [diff]
 	tool = meld
+
+[merge]
+	tool = meld
