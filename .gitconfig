@@ -19,21 +19,26 @@
 	file-view-vpane-position = 529
 	main-window-view = HistoryView
 [alias]
+	# Commits all files that are already added to the repo, with a short msg.
 	commit-tracked = commit -am
 	ct = commit -am
-
+	# Commits all files that are already added to the repo, using `core.editor` for the msg.
 	commit-longmsg = commit -a
 	cl = commit -a
 	# Print a command, and then run it. The command is ran in the current shell.
 	run = "!printf \"%s \" \"$@\";"
+	# Make a dev branch.
 	makedev = !git checkout -b dev
+	# Like it says, switch to master, merge dev, push to remote, go back to dev.
 	mergedevpushmaster = !git co master && git merge dev && git push && git co dev
 
-
+	# Show the last commit.
     last-commit = show --pretty=oneline
+	# List the last 10 commits (adding -n N) can change the number.
 	last-commits = !git log --pretty=oneline | head
+	# List all commits.
 	show-commits = log --pretty=oneline
-
+	# Pure aliases, for typing reasons.
 	co = checkout
 	stat = status
 	s = status
