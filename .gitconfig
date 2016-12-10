@@ -24,8 +24,10 @@
 
 	commit-longmsg = commit -a
 	cl = commit -a
-
+	# Print a command, and then run it. The command is ran in the current shell.
+	run = "!printf \"%s \" \"$@\";"
 	makedev = !git checkout -b dev
+	mergedevpushmaster = !git co master && git merge dev && git push && git co dev
 
 
     last-commit = show --pretty=oneline
@@ -39,12 +41,25 @@
 	# These are only here because my keyboard isn't that great.
 	sta = status
 	st = status
+	stt = status
+	# Show tag names and descriptions.
 	tags = tag -l -n1
+	# Show number of files changed, insertions, deletions.
 	diffstat = diff --stat
+	# Search for commits using a text search on the changed lines. Ex: git search 'import'
 	search = log --pretty=oneline -S
+	# Search for commits using regex on the changed lines. Ex: git rsearch 'def \w+'
 	rsearch = log --pretty=oneline -G
+	# Search for commits that changed a line range. Ex: git lsearch 1,10:myfile.py
 	lsearch = log --pretty=oneline -L
 
+	# Helpers from https://git.wiki.kernel.org/index.php/Aliases#Advanced_aliases_with_arguments
+	# graphviz output should be piped to `dotty`, with 'git graphviz | dotty /dev/stdin'
+	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+	# whois should be called with at least part of an author name.
+	whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+	# whatis should be called with a commit id.
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
 [credential "https://github.com"]
 	username=cjwelborn
