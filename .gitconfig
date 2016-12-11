@@ -19,6 +19,14 @@
 	file-view-vpane-position = 529
 	main-window-view = HistoryView
 [alias]
+	# Helpers from https://git.wiki.kernel.org/index.php/Aliases#Advanced_aliases_with_arguments
+	# graphviz output should be piped to `dotty`, with 'git graphviz | dotty /dev/stdin'
+	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+	# whois should be called with at least part of an author name.
+	whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+	# whatis should be called with a commit id.
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+
 	# Commits all files that are already added to the repo, with a short msg.
 	commit-tracked = commit -am
 	ct = commit -am
@@ -58,13 +66,8 @@
 	# Search for commits that changed a line range. Ex: git lsearch 1,10:myfile.py
 	lsearch = log --pretty=oneline -L
 
-	# Helpers from https://git.wiki.kernel.org/index.php/Aliases#Advanced_aliases_with_arguments
-	# graphviz output should be piped to `dotty`, with 'git graphviz | dotty /dev/stdin'
-	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
-	# whois should be called with at least part of an author name.
-	whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-	# whatis should be called with a commit id.
-	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+	# List submodules in a repo.
+	listsubmodules = !git config --file .gitmodules --name-only --get-regexp path
 
 [credential "https://github.com"]
 	username=cjwelborn
