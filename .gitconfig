@@ -66,9 +66,6 @@
 	# Search for commits that changed a line range. Ex: git lsearch 1,10:myfile.py
 	lsearch = log --pretty=oneline -L
 
-	# List submodules in a repo.
-	listsubmodules = !git config --file .gitmodules --name-only --get-regexp path
-
 [credential "https://github.com"]
 	username=cjwelborn
 
