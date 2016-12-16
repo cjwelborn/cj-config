@@ -65,6 +65,8 @@
 	rsearch = log --pretty=oneline -G
 	# Search for commits that changed a line range. Ex: git lsearch 1,10:myfile.py
 	lsearch = log --pretty=oneline -L
+	# Faster way to do this (lazy, less typing)
+	remotes = "!bash -c 'gitrems=\"$(git remote -v)\";if [[ -z \"$gitrems\" ]]; then printf \"\nNo remote repos.\n\" 1>&2; exit 1; else printf \"%s\n\" \"$gitrems\"; fi'"
 
 [credential "https://github.com"]
 	username=cjwelborn
