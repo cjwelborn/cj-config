@@ -9,6 +9,7 @@ set nocompatible
 " Normal config here. --------------------------------------------------------
 filetype plugin indent on
 set modeline
+set clipboard=unnamedplus
 " No word wrapping.
 set nowrap
 " For gvim, follow mouse focus.
@@ -121,3 +122,14 @@ let g:jedi#completions_enabled = 1
 "    autocmd InsertEnter * set splitbelow
 "    autocmd InsertLeave * set splitbelow!
 "augroup END
+
+" For vim-racer --------------------------------------------------------------
+if filereadable("/home/cj/.cargo/bin/racer")
+    set hidden
+    let g:racer_cmd = "/home/cj/.cargo/bin/racer"
+    autocmd FileType rust nmap gd <Plug>(rust-def)
+    autocmd FileType rust nmap gs <Plug>(rust-def-split)
+    autocmd FileType rust nmap gx <Plug>(rust-def-vertical)
+    autocmd FileType rust nmap <leader>gd <Plug>(rust-doc)
+endif
+
