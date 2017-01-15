@@ -1,0 +1,36 @@
+{
+	"auto_complete_on_tab": true,
+	"color_scheme": "Packages/Theme - Solarized Flat/Solarized Flat.tmTheme",
+	"ensure_newline_at_eof_on_save": true,
+	"folder_exclude_patterns":
+	[
+		"__pycache__",
+		".sass-cache",
+		".settings",
+		".svn",
+		".git",
+		".hg",
+		"CVS"
+	],
+	"font_face": "DejaVu Sans Mono for Powerline",
+	"font_options":
+	[
+		"no_italic"
+	],
+	"font_size": 10,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"rulers":
+	[
+		78
+	],
+	"show_encoding": true,
+	"show_line_endings": true,
+	"theme": "Boxy Solarized Dark.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"word_wrap": false
+}
