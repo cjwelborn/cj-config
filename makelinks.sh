@@ -11,9 +11,28 @@ appscript="${apppath##*/}"
 shopt -s dotglob
 shopt -s nullglob
 
+function confirm {
+    # Confirm a user's answer to a yes/no quesion.
+    [[ -n "$1" ]] && echo -e "\n$1"
+    read -r -p $'\n'"$1 (y/N): " ans
+    yespat='^[Yy]([Ee][Ss])?$'
+    [[ "$ans" =~ $yespat ]] || return 1
+    return 0
+}
+
 function echo_err {
     # Echo to stderr.
     echo -e "$@" 1>&2
+}
+
+function echo_file_op {
+    # echo_err, with some formatting for "File Op: <filepath>"
+    printf "%20s: %s\n" "$1" "$2"
+}
+
+function echo_file_op_err {
+    # Same as echo_file_op 1>&2.
+    echo_file_op "$@" 1>&2
 }
 
 function fail {
@@ -70,29 +89,44 @@ for arg; do
     esac
 done
 
+# No args means use all of the dot files.
 ((${#userargs[@]} == 0)) && userargs=(.*)
+[[ -d sublime-text ]] && userargs+=(sublime-text/*)
 
 let errs=0
 ignore_pat='(^\.$)|(^\.\.$)|(^\.git$)|(^\.gitmodules$)'
 for filepath in "${userargs[@]}"; do
     filename="${filepath##*/}"
-
     filepath="$(readlink -f "$filepath")"
     destpath="${HOME}/${filename}"
+    [[ "$filepath" =~ sublime-text/ ]] && destpath="$HOME/.config/sublime-text-3/Packages/User/$filename"
     [[ "$filename" =~ $ignore_pat ]] && {
-        echo_err "Ignoring file: $filepath"
+        echo_file_op_err "Ignoring file" "$filepath"
         continue
     }
     [[ -e "$destpath" ]] && {
-        echo_err "Already exists: $destpath"
+        echo_file_op_err "Already exists" "$destpath"
         continue
     }
+    destdir="${destpath%/*}"
+    [[ -d "$destdir" ]] || {
+        echo_err "Destination directory does not exist: $destdir"
+        confirm "Create the directory?" || continue
+        if ((do_dryrun)); then
+            echo_file_op_err "Would've ran" "mkdir -p $destdir"
+        else
+            mkdir -p "$destdir" || {
+                echo_err "Failed to create destination directory: $destdir"
+                continue
+            }
+        fi
+    }
     ((do_dryrun)) && {
-        echo_err "Would've ran: ln -s $filepath $destpath"
+        echo_file_op_err "Would've ran" "ln -s $filepath $destpath"
         continue
     }
     if ln -s "$filepath" "$destpath"; then
-        printf "Linked: %s -. %s\n" "$filepath" "$destpath"
+        echo_file_op "Linked" "$filepath -> $destpath"
     else
         echo_err "Failed to create symlink: $destpath"
         let errs+=1
