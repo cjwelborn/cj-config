@@ -42,8 +42,9 @@
 
 	# Show the last commit.
     last-commit = show --pretty=oneline
-	# List the last 10 commits (adding -n N) can change the number.
-	last-commits = !git log --pretty=oneline | head
+	# List the last 10 commits, Usage: last-commits [revision] [number]
+	# If only a number is given, or no arguments are given, then HEAD is used.
+	last-commits = "!gitlog() { local rev=${1:-HEAD} num=${2:-10}; if echo $rev | egrep -q '^[0-9]+$'; then num=$rev; rev=HEAD; fi; git log --pretty=oneline $rev | head -n $num; }; gitlog"
 	# List all commits.
 	show-commits = log --pretty=oneline
 	# Pure aliases, for typing reasons.
