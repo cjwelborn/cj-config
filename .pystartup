@@ -72,6 +72,7 @@ def save_history(historypath=historyPath):
     import readline
     readline.write_history_file(historypath)
 
+
 # Register save-history on exit.
 atexit.register(save_history)
 
@@ -81,6 +82,7 @@ atexit.register(save_history)
 def noop_color(text=None, fore=None, back=None, style=None):
     """  A function that does nothing, to disable color() and C(). """
     return text
+
 
 try:
     from colr import color, Colr as C  # noqa
@@ -257,6 +259,7 @@ class Rager(object):
         sys.stdout.write(RAGESTR)
         return ''
 
+
 RAGE = Rager()
 
 
@@ -289,7 +292,7 @@ def compile_script(filename):
 
 def import_scripts(path=None):
     """ Add /home/cj/scripts to sys.path. """
-    path = os.path.join(SCRIPTS, path) if path else scriptdir
+    path = os.path.join(SCRIPTS, path) if path else SCRIPTS
     sys.path.insert(1, path)
     sys.stdout.write('\nNew import path: {}\n'.format(path))
 
@@ -345,6 +348,7 @@ def printp(o, indent=None, sort_keys=False):
     """ Print a dict/list/tuple, with pretty formatting. """
     print(json.dumps(o, indent=indent or 4, sort_keys=sort_keys))
 
+
 # Set the prompt text. PS1 is the main prompt, PS2 is continuations.. --------
 sys.ps1 = '>>> '
 sys.ps2 = '... '
@@ -378,6 +382,7 @@ def preloads():
         ))
         return len(__preloads)
     return 0
+
 
 # Report any custom funcs added by .pystartup.
 __preloads = set(dir()).difference(__existing)

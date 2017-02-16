@@ -94,7 +94,7 @@ done
 [[ -d sublime-text ]] && userargs+=(sublime-text/*)
 
 let errs=0
-ignore_pat='(^\.$)|(^\.\.$)|(^\.git$)|(^\.gitmodules$)'
+ignore_pat='(^\.$)|(^\.\.$)|(^\.git$)|(^\.gitmodules$)|(^makelinks.sh$)'
 for filepath in "${userargs[@]}"; do
     filename="${filepath##*/}"
     filepath="$(readlink -f "$filepath")"
