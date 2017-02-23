@@ -34,9 +34,8 @@
 	commit-longmsg = commit -a
 	cl = commit -a
 	# Print a command, and then run it. The command is ran in the current shell.
-	run = "!printf \"%s \" \"$@\";"
-	# Make a dev branch.
-	makedev = !git checkout -b dev
+	run = "!printf \"%s \" \"$@\"; printf \"\n\"; bash -c \"$@\""
+
 	# Like it says, switch to master, merge dev, push to remote, go back to dev.
 	mergedevpushmaster = !git co master && git merge dev && git push && git co dev
 
@@ -70,6 +69,10 @@
 	quick-stats = "! if hash git-quick-stats &>/dev/null; then /home/cj/.local/bin/git-quick-stats; else printf 'Missing git-quick-stats!\nClone from: git://github.com/arzzen/git-quick-stats.git\n'"
 	# Faster way to do this (lazy, less typing)
 	remotes = "!bash -c 'gitrems=\"$(git remote -v)\";if [[ -z \"$gitrems\" ]]; then printf \"\nNo remote repos.\n\" 1>&2; exit 1; else printf \"%s\n\" \"$gitrems\"; fi'"
+	# Show commits that haven't been pushed to remote yet.
+	unpushed = "!gitunpushed() { local repo=${1:-welbornprod/dev}; git log --pretty=oneline $repo..HEAD; }; gitunpushed"
+	# Show a diff for commits that haven't been pushed to remote yet.
+	remotediff = "!gitremotediff() { local repo=${1:-welbornprod/dev}; git diff --pretty=oneline $repo..HEAD; }; gitremotediff"
 
 [credential "https://github.com"]
 	username=cjwelborn
