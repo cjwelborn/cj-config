@@ -1,0 +1,114 @@
+#!/bin/bash
+
+# Script to delegate responsibilities for lesspipe.
+# -Christopher Welborn 03-02-2017
+appname=".lessfilter"
+appversion="0.0.1"
+apppath="$(readlink -f "${BASH_SOURCE[0]}")"
+appscript="${apppath##*/}"
+# appdir="${apppath%/*}"
+
+
+function echo_err {
+    # Echo to stderr.
+    echo -e "$@" 1>&2
+}
+
+function fail {
+    # Print a message to stderr and exit with an error status code.
+    echo_err "$@"
+    exit 1
+}
+
+function fail_usage {
+    # Print a usage failure message, and exit with an error status code.
+    print_usage "$@"
+    exit 1
+}
+
+function print_usage {
+    # Show usage reason if first arg is available.
+    [[ -n "$1" ]] && echo_err "\n$1\n"
+
+    echo "$appname v. $appversion
+
+    This script should run with one file as it's only argument.
+    It is used by less/lesspipe to handle file processing.
+
+    Usage:
+        $appscript -h | -v
+        $appscript FILE
+
+    Options:
+        FILE          : File to handle.
+        -h,--help     : Show this message.
+        -v,--version  : Show $appname version and exit.
+    "
+}
+
+(( $# > 0 )) || fail_usage "No arguments!"
+
+declare -a filepaths
+
+for arg; do
+    case "$arg" in
+        "-h" | "--help")
+            print_usage ""
+            exit 0
+            ;;
+        "-v" | "--version")
+            echo -e "$appname v. $appversion\n"
+            exit 0
+            ;;
+        -*)
+            fail_usage "Unknown flag argument: $arg"
+            ;;
+        *)
+    filepaths+=("$arg")
+    esac
+done
+
+((${#filepaths[@]})) || { echo_err "No file names."; exit 1; }
+filepath="${filepaths[0]}"
+[[ -n "$filepath" ]] || { echo_err "No file path provided."; exit 1; }
+
+# Formats available with no extra arguments.
+declare -a handled=(
+    .bash
+    .c
+    .cpp
+    .css
+    .h
+    .hpp
+    .html
+    .js
+    .pl
+    .py
+    .sh
+)
+# Build regex pattern for all handled file formats.
+handled_pat="$(printf "(\%s$)|" "${handled[@]}")"
+handled_pat="${handled_pat%|}"
+
+# Special case lexer needed.
+declare -A lexers=(
+    [.json]=js
+)
+# Build regex pattern for all special case file formats.
+lexers_pat="$(printf "(\%s$)|" "${!lexers[@]}")"
+lexers_pat="${lexers_pat%|}"
+
+ext=".${filepath##*.}"
+if [[ "$filepath" =~ $handled_pat ]]; then
+    ccat --colors "$filepath"
+elif [[ "$filepath" =~ $lexers_pat ]]; then
+    lexer="${lexers[$ext]}"
+    ccat --colors --lexer "$lexer" "$filepath"
+# Other formats can be handled here, detecting the extension:
+# elif [[ "$ext" == ".thing" ]]; then
+#     mycommand "$filepath"
+else
+    # File format not handled.
+    exit 1
+fi
+exit 0
