@@ -1,0 +1,26 @@
+[
+  {
+    title: "scripts"
+    paths: [
+      "/home/cj/scripts"
+    ]
+  }
+  {
+    title: "clones"
+    paths: [
+      "/home/cj/clones"
+    ]
+  }
+  {
+    title: "wp_site"
+    paths: [
+      "/home/cj/scripts/welbornprod/wp_site"
+    ]
+  }
+  {
+    title: "welbornprod-root"
+    paths: [
+      "/home/cj/scripts/welbornprod"
+    ]
+  }
+]

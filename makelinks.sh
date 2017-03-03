@@ -3,7 +3,7 @@
 # Links all dotfiles from ./config to ~.
 # -Christopher Welborn 12-25-2016
 appname="Make Config Links"
-appversion="0.0.1"
+appversion="0.1.0"
 apppath="$(readlink -f "${BASH_SOURCE[0]}")"
 appscript="${apppath##*/}"
 # appdir="${apppath%/*}"
@@ -55,11 +55,14 @@ function print_usage {
 
     Usage:
         $appscript -h | -v
-        $appscript [-d] [FILE...]
+        $appscript [-d] [-f] [FILE...]
 
     Options:
         FILE          : File to make a symlink for in ~.
         -d,--dryrun   : Dry run, just show what would be done.
+        -f,--force    : Force overwrite. \`--dryrun\` still works as intended
+                        when this option is used, but without \`--dryrun\`
+                        any existing file will be overwritten.
         -h,--help     : Show this message.
         -v,--version  : Show $appname version and exit.
     "
@@ -67,11 +70,15 @@ function print_usage {
 
 declare -a userargs
 do_dryrun=0
+do_force=0
 
 for arg; do
     case "$arg" in
         "-d" | "--dryrun")
             do_dryrun=1
+            ;;
+        "-f" | "--force")
+            do_force=1
             ;;
         "-h" | "--help")
             print_usage ""
@@ -90,24 +97,40 @@ for arg; do
 done
 
 # No args means use all of the dot files.
-((${#userargs[@]} == 0)) && userargs=(.*)
-[[ -d sublime-text ]] && userargs+=(sublime-text/*)
-
+((${#userargs[@]} == 0)) && {
+    userargs=(.*)
+    # ..and use all files in the sublime-text directory.
+    [[ -d sublime-text ]] && userargs+=(sublime-text/*)
+    # ..and the atom directory.
+    [[ -d atom ]] && userargs+=(atom/*)
+}
 let errs=0
-ignore_pat='(^\.$)|(^\.\.$)|(^\.git$)|(^\.gitmodules$)|(^makelinks.sh$)'
+ignore_pat='(^\.$)|(^\.\.$)|(^\.git$)|(^\.gitmodules$)|(^makelinks.sh$)|(README.md)'
 for filepath in "${userargs[@]}"; do
     filename="${filepath##*/}"
     filepath="$(readlink -f "$filepath")"
     destpath="${HOME}/${filename}"
     [[ "$filepath" =~ sublime-text/ ]] && destpath="$HOME/.config/sublime-text-3/Packages/User/$filename"
+    [[ "$filepath" =~ atom/ ]] && destpath="$HOME/.atom/$filename"
     [[ "$filename" =~ $ignore_pat ]] && {
         echo_file_op_err "Ignoring file" "$filepath"
         continue
     }
-    [[ -e "$destpath" ]] && {
-        echo_file_op_err "Already exists" "$destpath"
-        continue
-    }
+    if [[ -e "$destpath" ]]; then
+        if ((do_force)); then
+            if ((do_dryrun)); then
+                echo_file_op_err "Would've ran" "rm $destpath"
+            else
+                rm "$destpath" || {
+                    echo_err "Failed to remove old file: $destpath"
+                    continue
+                }
+            fi
+        else
+            echo_file_op_err "Already exists" "$destpath"
+            continue
+        fi
+    fi
     destdir="${destpath%/*}"
     [[ -d "$destdir" ]] || {
         echo_err "Destination directory does not exist: $destdir"

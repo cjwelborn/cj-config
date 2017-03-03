@@ -1,0 +1,62 @@
+"*":
+  "atom-beautify":
+    general:
+      _analyticsUserId: "540cd4b2-2354-4af0-8d00-3af073fa0c8c"
+  core:
+    disabledPackages: [
+      "atom-ctags"
+      "spell-check"
+    ]
+    ignoredNames: [
+      ".git"
+      ".hg"
+      ".svn"
+      ".DS_Store"
+      "._*"
+      "Thumbs.db"
+      "__pycache__"
+      ".pyc"
+    ]
+    projectHome: "/home/cj/scripts"
+    telemetryConsent: "no"
+    themes: [
+      "one-dark-ui"
+      "solarized-dark-syntax"
+    ]
+  editor:
+    fontFamily: "DejaVu Sans Mono"
+    fontSize: 12
+    preferredLineLength: 78
+    scrollPastEnd: true
+    showIndentGuide: true
+    tabLength: 4
+  "exception-reporting":
+    userId: "8b661014-c9db-6395-961c-99202811dfd3"
+  hyperclick:
+    darwinTriggerKeys: "shiftKey"
+    linuxTriggerKeys: "altKey"
+    win32TriggerKeys: "altKey"
+  linter:
+    errorPanelHeight: 24
+  "linter-eslint":
+    eslintrcPath: "/home/cj/.eslintrc.json"
+    globalNodePath: "/home/cj/.nvm/versions/node/v6.10.0"
+    lintHtmlFiles: true
+    useGlobalEslint: true
+  "linter-flake8":
+    ignoreErrorCodes: [
+      "F811"
+    ]
+    maxLineLength: 78
+  minimap:
+    plugins:
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
+  "tree-view":
+    alwaysOpenExisting: true
+    autoReveal: true
+    hideIgnoredNames: true
+    hideVcsIgnoredFiles: true
+    squashDirectoryNames: true
+  welcome:
+    showOnStartup: false
