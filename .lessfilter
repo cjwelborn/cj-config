@@ -72,12 +72,14 @@ done
 filepath="${filepaths[0]}"
 [[ -n "$filepath" ]] || { echo_err "No file path provided."; exit 1; }
 
-# Formats available with no extra arguments.
+# Formats available with no extra arguments to ccat.
 declare -a handled=(
     .bash
     .c
     .cpp
     .css
+    .gitconfig
+    .gitmodules
     .h
     .hpp
     .html
@@ -90,7 +92,7 @@ declare -a handled=(
 handled_pat="$(printf "(\%s$)|" "${handled[@]}")"
 handled_pat="${handled_pat%|}"
 
-# Special case lexer needed.
+# Special case lexer needed for ccat.
 declare -A lexers=(
     [.json]=js
 )
@@ -109,6 +111,7 @@ elif [[ "$filepath" =~ $lexers_pat ]]; then
 #     mycommand "$filepath"
 else
     # File format not handled.
+    echo_err "File format not recognized."
     exit 1
 fi
 exit 0
