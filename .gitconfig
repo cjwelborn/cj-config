@@ -73,6 +73,7 @@
 	unpushed = "!gitunpushed() { local repo=${1:-welbornprod/dev}; git log --pretty=oneline $repo..HEAD; }; gitunpushed"
 	# Show a diff for commits that haven't been pushed to remote yet.
 	remotediff = "!gitremotediff() { local repo=${1:-welbornprod/dev}; git diff --pretty=oneline $repo..HEAD; }; gitremotediff"
+	branches = branch -v
 
 [credential "https://github.com"]
 	username=cjwelborn
