@@ -37,7 +37,7 @@
     linuxTriggerKeys: "altKey"
     win32TriggerKeys: "altKey"
   linter:
-    errorPanelHeight: 24
+    errorPanelHeight: 42
   "linter-eslint":
     eslintrcPath: "/home/cj/.eslintrc.json"
     globalNodePath: "/home/cj/.nvm/versions/node/v6.10.0"
