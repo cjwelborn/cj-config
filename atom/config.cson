@@ -48,10 +48,16 @@
       "F811"
     ]
     maxLineLength: 78
+  "linter-ui-default": {}
   minimap:
     plugins:
       "highlight-selected": true
       "highlight-selectedDecorationsZIndex": 0
+  "terminal-plus":
+    core:
+      shell: "/usr/bin/env bash"
+    style:
+      fontFamily: "\"DejaVu Sans Mono for Powerline\""
   "tree-view":
     alwaysOpenExisting: true
     autoReveal: true
