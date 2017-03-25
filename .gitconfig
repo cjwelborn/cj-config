@@ -67,9 +67,8 @@
 	lsearch = log --pretty=oneline -L
 	# Use git-quick-stats if available.
 	quick-stats = "! if hash git-quick-stats &>/dev/null; then /home/cj/.local/bin/git-quick-stats; else printf 'Missing git-quick-stats!\nClone from: git://github.com/arzzen/git-quick-stats.git\n'"
-	# Faster way to do this (lazy, less typing)
-	remotes = "!bash -c 'gitrems=\"$(git remote -v)\";if [[ -z \"$gitrems\" ]]; then printf \"\nNo remote repos.\n\" 1>&2; exit 1; else printf \"%s\n\" \"$gitrems\"; fi'"
 	# Show commits that haven't been pushed to remote yet.
+	# TODO: Add this feature to git-commands/git-remotes.sh.
 	unpushed = "!gitunpushed() { local repo=${1:-welbornprod/dev}; git log --pretty=oneline $repo..HEAD; }; gitunpushed"
 	# Show a diff for commits that haven't been pushed to remote yet.
 	remotediff = "!gitremotediff() { local repo=${1:-welbornprod/dev}; git diff --pretty=oneline $repo..HEAD; }; gitremotediff"

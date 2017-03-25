@@ -48,7 +48,9 @@
       "F811"
     ]
     maxLineLength: 78
-  "linter-ui-default": {}
+  "linter-ui-default":
+    panelHeight: 49
+    showPanel: true
   minimap:
     plugins:
       "highlight-selected": true
