@@ -27,6 +27,16 @@
 	# whatis should be called with a commit id.
 	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
+	# List all branches (also, you can use branches -a | -r).
+	branches = branch -v
+	# Hacky way to make fzf's git-related commands available as aliases.
+	# Browse, and checkout a branch.
+	fco = "!bash -c \"source /home/cj/bash.alias.sh; fzfco\""
+	# Browse, and checkout a specific commit.
+	fcoc = "!bash -c \"source /home/cj/bash.alias.sh; fzfcoc\""
+	# Browse, and show a specific commit.
+	fshow = "!bash -c \"source /home/cj/bash.alias.sh; fzfshow\""
+
 	# Commits all files that are already added to the repo, with a short msg.
 	commit-tracked = commit -am
 	ct = commit -am
@@ -72,7 +82,6 @@
 	unpushed = "!gitunpushed() { local repo=${1:-welbornprod/dev}; git log --pretty=oneline $repo..HEAD; }; gitunpushed"
 	# Show a diff for commits that haven't been pushed to remote yet.
 	remotediff = "!gitremotediff() { local repo=${1:-welbornprod/dev}; git diff --pretty=oneline $repo..HEAD; }; gitremotediff"
-	branches = branch -v
 
 [credential "https://github.com"]
 	username=cjwelborn
