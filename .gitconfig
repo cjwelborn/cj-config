@@ -80,7 +80,7 @@
 	# Show commits that haven't been pushed to remote yet.
 	# TODO: Add this feature to git-commands/git-remotes.sh.
 	unpushed = "!gitunpushed() { local repo=${1:-welbornprod/dev}; git log --pretty=oneline $repo..HEAD; }; gitunpushed"
-	unpulled = "!gitunpulled() { local repo=${1:-welbornprod/dev}; git log --pretty=oneline HEAD..$repo; }; gitunpulled"
+	unpulled = "!gitunpulled() { local repo=${1:-welbornprod/dev}; local repoargs=`echo $repo | tr '/' ' '`; git fetch $repoargs && git log --pretty=oneline HEAD..$repo; }; gitunpulled"
 	# Show a diff for commits that haven't been pushed to remote yet.
 	remotediff = "!gitremotediff() { local repo=${1:-welbornprod/dev}; git diff --pretty=oneline $repo..HEAD; }; gitremotediff"
 
