@@ -26,7 +26,7 @@
 # Atom Flight Manual:
 # https://atom.io/docs/latest/using-atom-basic-customization#cson
 'atom-workspace':
-    'ctrl-shift-t': 'todo-show:find-in-open-files'
+    'alt-shift-t': 'todo-show:find-in-open-files'
 
 'atom-text-editor':
     'ctrl-alt-right': 'pane:split-right-and-copy-active-item'

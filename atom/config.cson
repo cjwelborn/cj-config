@@ -17,6 +17,9 @@
       "__pycache__"
       ".pyc"
     ]
+    packagesWithKeymapsDisabled: [
+      "todo-show"
+    ]
     projectHome: "/home/cj/scripts"
     telemetryConsent: "no"
     themes: [
