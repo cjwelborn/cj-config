@@ -4,7 +4,6 @@ xterm*termName: xterm-256color
 xterm*faceName: DejaVu Sans Mono for Powerline:style=Book:antialias=false
 xterm*faceNameDoublesize: WenQuanYi Bitmap Song
 xterm*faceSize: 8
-! TODO: Solarized Dark colors.
 
 ! Black + DarkGrey
 *color0:  #000000
