@@ -24,7 +24,15 @@ import os                      # noqa
 import platform                # noqa
 import re                      # noqa
 import time                    # noqa
+try:
+    import tkinter as tk       # noqa
+    from tkinter import ttk    # noqa
+except ImportError:
+    import Tkinter as tk       # noqa
 
+print('\nLoading .pystartup file: {}'.format(
+    os.environ.get('PYTHONSTARTUP', '<PYTHONSTARTUP not set!>')
+))
 try:
     # TODO: Figure out how this is better than the normal method.
     from jedi.utils import setup_readline as jedi_setup_readline
