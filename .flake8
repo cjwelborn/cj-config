@@ -1,0 +1,4 @@
+[flake8]
+ignore=
+    # Ignore line breaks after binary operators (+,-,and,or)
+    W504
