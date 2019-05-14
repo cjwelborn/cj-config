@@ -10,6 +10,7 @@
 	branch = always
 	ui = always
 [core]
+	attributesfile = /home/cj/.gitattributes
 	excludesfile = /home/cj/.gitignore
 	editor = vim
 [giggle]
