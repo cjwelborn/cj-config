@@ -84,6 +84,10 @@
 	unpulled = "!gitunpulled() { local repo=${1:-welbornprod/dev}; local repoargs=`echo $repo | tr '/' ' '`; if git fetch $repoargs 1>/dev/null 2>/dev/null; then git log --pretty=oneline HEAD..$repo; else printf \"No changes for:$repo\\n\"; fi; }; gitunpulled"
 	# Show a diff for commits that haven't been pushed to remote yet.
 	remotediff = "!gitremotediff() { local repo=${1:-welbornprod/dev}; git diff --pretty=oneline $repo..HEAD; }; gitremotediff"
+	# Use `hub` to list issues.
+	issue = "!hub issue"
+	# Use `hub` to list issues with their full body text.
+	issues = "!hub issue -f '%n%sC%>(8)%i%Creset %t% l%n%Ccyan%b%Creset%n'"
 
 [credential "https://github.com"]
 	username=cjwelborn
