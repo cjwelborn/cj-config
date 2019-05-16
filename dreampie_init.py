@@ -88,7 +88,7 @@ def edit_file(filename, vim=False):
     else:
         cmd = ['subl']
     cmd.append(filename)
-    return run_command(cmd, background=True)
+    return run_command(*cmd, background=True)
 
 
 def formatblk(text, width=45, prepend=None):
@@ -182,7 +182,9 @@ def run_command(*args, background=False, **kwargs):
     return output
 
 
-def run_script(filename, *args, exe=None, p=False, print_output=False):
+def run_script(
+        filename, *args,
+        exe=None, p=False, print_output=False, konsole=False):
     """ Run a bash or python script. """
     scripts = '/home/cj/scripts'
     fname = os.path.split(filename)[-1]
@@ -208,12 +210,16 @@ def run_script(filename, *args, exe=None, p=False, print_output=False):
     else:
         print('File not found: {}'.format(filename), file=sys.stderr)
         return None
+    if konsole:
+        cmd = ['konsole', '--hold', '-e']
+    else:
+        cmd = []
     if exe:
-        cmd = [exe, scriptfile]
+        cmd.extend((exe, scriptfile))
     elif scriptfile.endswith(('.sh', '.bash')):
-        cmd = ['bash', scriptfile]
+        cmd.extend(('bash', scriptfile))
     elif scriptfile.endswith(('.py', '.pyw')):
-        cmd = ['python3', scriptfile]
+        cmd.extend(('python3', scriptfile))
     else:
         print(
             'Unknown file type: {}'.format(os.path.split(scriptfile)[-1]),
@@ -225,7 +231,7 @@ def run_script(filename, *args, exe=None, p=False, print_output=False):
         )
         return None
     cmd.extend(args)
-    output = run_command(*cmd)
+    output = run_command(*cmd, background=konsole)
     if p or print_output:
         print(output)
     return output
