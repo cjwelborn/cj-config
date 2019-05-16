@@ -88,6 +88,7 @@
 	issue = "!hub issue"
 	# Use `hub` to list issues with their full body text.
 	issues = "!hub issue -f '%n%sC%>(8)%i%Creset %t% l%n%Ccyan%b%Creset%n'"
+	mergedev = !git co master && git merge dev && git co dev
 
 [credential "https://github.com"]
 	username=cjwelborn
