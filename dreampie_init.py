@@ -98,6 +98,17 @@ def formatblk(text, width=45, prepend=None):
     )
 
 
+def get_src_file(obj):
+    """ Use inspect.getsourcefile to reveal the source file for an object.
+        If a str is passed, it is given to `pymodfile` to reveal the
+        source file.
+    """
+    if isinstance(obj, str):
+        print(run_script('pymodfile', obj))
+    else:
+        print(inspect.getsourcefile(obj))  # noqa (implicitly imported)
+
+
 def import_modnames(autos, globs, locs):
     sys.stdout.write('Imported:\n')
     imported = []
@@ -173,25 +184,25 @@ def run_command(*args, background=False, **kwargs):
 
 def run_script(filename, *args, exe=None, p=False, print_output=False):
     """ Run a bash or python script. """
-    scriptsdir = '/home/cj/scripts'
-    _, fname = os.path.split(filename)[-1]
-    basename, _ = os.path.splitext(fname)[0]
+    scripts = '/home/cj/scripts'
+    fname = os.path.split(filename)[-1]
+    basename = os.path.splitext(fname)[0]
     trypaths = (
         filename,
         '{}.py'.format(filename),
         '{}.sh'.format(filename),
-        os.path.join(scriptsdir, filename),
-        os.path.join(scriptsdir, '{}.py'.format(filename)),
-        os.path.join(scriptsdir, '{}.sh'.format(filename)),
-        os.path.join(scriptsdir, basename, '{}.py'.format(filename)),
-        os.path.join(scriptsdir, basename, '{}.sh'.format(filename)),
-        os.path.join(scriptsdir, 'bash', filename),
-        os.path.join(scriptsdir, 'bash', '{}.sh'.format(filename)),
-        os.path.join(scriptsdir, 'bash', basename, filename),
-        os.path.join(scriptsdir, 'bash', basename, '{}.sh'.format(filename)),
+        os.path.join(scripts, filename),
+        os.path.join(scripts, '{}.py'.format(filename)),
+        os.path.join(scripts, '{}.sh'.format(filename)),
+        os.path.join(scripts, basename, '{}.py'.format(filename)),
+        os.path.join(scripts, basename, '{}.sh'.format(filename)),
+        os.path.join(scripts, 'bash', filename),
+        os.path.join(scripts, 'bash', '{}.sh'.format(filename)),
+        os.path.join(scripts, 'bash', basename, filename),
+        os.path.join(scripts, 'bash', basename, '{}.sh'.format(filename)),
     )
     for trypath in trypaths:
-        if os.path.exists(trypath):
+        if os.path.isfile(trypath):
             scriptfile = trypath
             break
     else:
@@ -214,7 +225,7 @@ def run_script(filename, *args, exe=None, p=False, print_output=False):
         )
         return None
     cmd.extend(args)
-    output = run_command(cmd)
+    output = run_command(*cmd)
     if p or print_output:
         print(output)
     return output
@@ -224,8 +235,6 @@ def run_script(filename, *args, exe=None, p=False, print_output=False):
 RAGE = lambda : sys.stdout.write('\n\n\n(╯°□°)╯︵┻━┻\n\n')  # noqa
 
 import_modnames(autoimports, globals(), locals())
-
-get_src_file = inspect.getsourcefile  # noqa (implicitly imported)
 
 # Aliases
 try:

@@ -19,10 +19,12 @@ from functools import partial  # noqa
 import sys                     # noqa
 from datetime import datetime  # noqa
 import importlib               # noqa
+import inspect                 # noqa
 import json                    # noqa
 import os                      # noqa
 import platform                # noqa
 import re                      # noqa
+import subprocess              # noqa
 import time                    # noqa
 try:
     import tkinter as tk       # noqa
@@ -37,15 +39,24 @@ try:
     # TODO: Figure out how this is better than the normal method.
     from jedi.utils import setup_readline as jedi_setup_readline
     from jedi import __version__ as __jedi_version__
-except ImportError:
-    # No jedi available.
-    import rlcompleter  # noqa
-    # Enable auto-complete for variable names and modules
-    readline.parse_and_bind('tab: complete')
-    print('\nUsing readline for completion.')
-else:
     jedi_setup_readline()
     print('\nUsing Jedi {} for completion.'.format(__jedi_version__))
+except ImportError:
+    # No jedi available.
+    try:
+        import rlcompleter  # noqa
+        # Enable auto-complete for variable names and modules
+        readline.parse_and_bind('tab: complete')
+        print('\nUsing readline for completion.')
+    except ImportError:
+        print(
+            '\n'.join((
+                '\nNeither `jedi` or `readline` is installed.',
+                'Tab-completion will be disabled!',
+            )),
+            file=sys.stderr,
+        )
+
 
 historyPath = os.path.expanduser('~/.pyhistory')
 # Read history on load.
@@ -246,29 +257,44 @@ pp = partial(__enable_pprint(), width=1)
 
 # Remove color functions if running in bpython (trips on escape codes).
 if __name__ == '__console__':
+    print('\nDisabling colr functions for bpython.')
     color = C = noop_color
 
 # Globals that will persist --------------------------------------------------
 SCRIPTS = '/home/cj/scripts'
 
-RAGESTR = ''.join((
-    str(C('(╯°□°)╯', fore='blue')),
-    '︵',
-    str(C('┻━┻', fore='yellow'))
-))
-
 
 class Rager(object):
+    ragestr = ''.join((
+        str(C('(╯°□°)╯', fore='blue')),
+        '︵',
+        str(C('┻━┻', fore='yellow'))
+    ))
 
     def __repr__(self):
         return str(self)
 
     def __str__(self):
-        sys.stdout.write(RAGESTR)
+        sys.stdout.write(self.ragestr)
         return ''
 
 
 RAGE = Rager()
+
+
+class Exiter(object):
+    """ Like exit/sys.exit, but exits when repr() is called. """
+    def __call__(self, *args):
+        sys.exit(*args)
+
+    def __repr__(self):
+        sys.exit(0)
+
+    def __str__(self):
+        return 'Exiter()'
+
+
+quit = Exiter()
 
 
 # Functions that will persist.
@@ -296,6 +322,32 @@ def compile_script(filename):
     if os.path.exists(scriptdir):
         return compile_file(scriptdir)
     raise FileNotFoundError('Cannot find this file: {}'.format(filename))
+
+
+def edit_file(filename, vim=False):
+    """ Open a file with `subl`. """
+    filename = filename.strip()
+    if not (filename and os.path.exists(filename)):
+        print('\nFile does not exist:\n  {}'.format(filename), file=sys.stderr)
+        return None
+
+    if vim:
+        cmd = ['konsole', '-e', 'vim']
+    else:
+        cmd = ['subl']
+    cmd.append(filename)
+    return run_command(cmd, background=True)
+
+
+def get_src_file(obj):
+    """ Use inspect.getsourcefile to reveal the source file for an object.
+        If a str is passed, it is given to `pymodfile` to reveal the
+        source file.
+    """
+    if isinstance(obj, str):
+        print(run_script('pymodfile', obj))
+    else:
+        print(inspect.getsourcefile(obj))
 
 
 def import_scripts(path=None):
@@ -355,6 +407,73 @@ def printc(s, fore=None, back=None, style=None):
 def printp(o, indent=None, sort_keys=False):
     """ Print a dict/list/tuple, with pretty formatting. """
     print(json.dumps(o, indent=indent or 4, sort_keys=sort_keys))
+
+
+def run_command(*args, background=False, **kwargs):
+    """ Shortcut to subprocess.check_output(). """
+    print('\nRunning: {}\n'.format(' '.join(args)))
+    if background:
+        # Command may open a new konsole or window. It needs to stay alive.
+        return subprocess.Popen(args, **kwargs)  # noqa (implicitly imported)
+
+    # Checking output for a simple command.
+    if kwargs.get('stderr', None) is None:
+        kwargs['stderr'] = subprocess.STDOUT  # noqa (implicitly imported)
+    output = subprocess.check_output(  # noqa (implicitly imported)
+        args,
+        **kwargs,
+    )
+    if hasattr(output, 'decode'):
+        output = output.decode()
+    return output
+
+
+def run_script(filename, *args, exe=None, p=False, print_output=False):
+    """ Run a bash or python script. """
+    fname = os.path.split(filename)[-1]
+    basename = os.path.splitext(fname)[0]
+    trypaths = (
+        filename,
+        '{}.py'.format(filename),
+        '{}.sh'.format(filename),
+        os.path.join(SCRIPTS, filename),
+        os.path.join(SCRIPTS, '{}.py'.format(filename)),
+        os.path.join(SCRIPTS, '{}.sh'.format(filename)),
+        os.path.join(SCRIPTS, basename, '{}.py'.format(filename)),
+        os.path.join(SCRIPTS, basename, '{}.sh'.format(filename)),
+        os.path.join(SCRIPTS, 'bash', filename),
+        os.path.join(SCRIPTS, 'bash', '{}.sh'.format(filename)),
+        os.path.join(SCRIPTS, 'bash', basename, filename),
+        os.path.join(SCRIPTS, 'bash', basename, '{}.sh'.format(filename)),
+    )
+    for trypath in trypaths:
+        if os.path.isfile(trypath):
+            scriptfile = trypath
+            break
+    else:
+        print('File not found: {}'.format(filename), file=sys.stderr)
+        return None
+    if exe:
+        cmd = [exe, scriptfile]
+    elif scriptfile.endswith(('.sh', '.bash')):
+        cmd = ['bash', scriptfile]
+    elif scriptfile.endswith(('.py', '.pyw')):
+        cmd = ['python3', scriptfile]
+    else:
+        print(
+            'Unknown file type: {}'.format(os.path.split(scriptfile)[-1]),
+            file=sys.stderr,
+        )
+        print(
+            'Add a case/command for it in dreampie_init.py:run_script().',
+            file=sys.stderr,
+        )
+        return None
+    cmd.extend(args)
+    output = run_command(*cmd)
+    if p or print_output:
+        print(output)
+    return output
 
 
 # Set the prompt text. PS1 is the main prompt, PS2 is continuations.. --------
