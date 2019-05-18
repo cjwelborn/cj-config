@@ -13,6 +13,7 @@
 	attributesfile = /home/cj/.gitattributes
 	excludesfile = /home/cj/.gitignore
 	editor = vim
+	templatedir = /home/cj/.git-templates
 [giggle]
 	main-window-maximized = false
 	main-window-geometry = 858x619+355+65
