@@ -13,6 +13,7 @@
 	attributesfile = /home/cj/.gitattributes
 	excludesfile = /home/cj/.gitignore
 	editor = vim
+	templatedir = /home/cj/.git-templates
 [giggle]
 	main-window-maximized = false
 	main-window-geometry = 858x619+355+65
@@ -46,9 +47,6 @@
 	cl = commit -a
 	# Print a command, and then run it. The command is ran in the current shell.
 	run = "!printf \"%s \" \"$@\"; printf \"\n\"; bash -c \"$@\""
-
-	# Like it says, switch to master, merge dev, push to remote, go back to dev.
-	mergedevpushmaster = !git co master && git merge dev && git push && git co dev
 
 	# Show the last commit.
     last-commit = show --pretty=oneline
@@ -88,7 +86,9 @@
 	issue = "!hub issue"
 	# Use `hub` to list issues with their full body text.
 	issues = "!hub issue -f '%n%sC%>(8)%i%Creset %t% l%n%Ccyan%b%Creset%n'"
-	mergedev = !git co master && git merge dev && git co dev
+	mergedev = !git co master && git merge --no-ff dev && git co dev
+	# Like it says, switch to master, merge dev, push to remote, go back to dev.
+	mergedevpushmaster = !git co master && git merge --no-ff dev && git push && git co dev
 
 [credential "https://github.com"]
 	username=cjwelborn
