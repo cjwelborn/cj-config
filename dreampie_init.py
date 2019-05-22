@@ -163,6 +163,11 @@ def list_global_funcs(ignore=None):
     print(formatblk(', '.join(globfuncs), width=45, prepend='    '))
 
 
+def read_file(filename):
+    with open(filename) as f:
+        return f.read()
+
+
 def run_command(*args, background=False, **kwargs):
     """ Shortcut to subprocess.check_output(). """
     print('\nRunning: {}\n'.format(' '.join(args)))

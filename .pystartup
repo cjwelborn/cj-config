@@ -409,6 +409,11 @@ def printp(o, indent=None, sort_keys=False):
     print(json.dumps(o, indent=indent or 4, sort_keys=sort_keys))
 
 
+def read_file(filename):
+    with open(filename) as f:
+        return f.read()
+
+
 def run_command(*args, background=False, **kwargs):
     """ Shortcut to subprocess.check_output(). """
     print('\nRunning: {}\n'.format(' '.join(args)))

@@ -86,9 +86,8 @@
 	issue = "!hub issue"
 	# Use `hub` to list issues with their full body text.
 	issues = "!hub issue -f '%n%sC%>(8)%i%Creset %t% l%n%Ccyan%b%Creset%n'"
+	merg = merge --no-ff
 	mergedev = !git co master && git merge --no-ff dev && git co dev
-	# Like it says, switch to master, merge dev, push to remote, go back to dev.
-	mergedevpushmaster = !git co master && git merge --no-ff dev && git push && git co dev
 
 [credential "https://github.com"]
 	username=cjwelborn
