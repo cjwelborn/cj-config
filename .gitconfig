@@ -29,8 +29,6 @@
 	# whatis should be called with a commit id.
 	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
-	# List all branches (also, you can use branches -a | -r).
-	branches = branch -v
 	# Hacky way to make fzf's git-related commands available as aliases.
 	# Browse, and checkout a branch.
 	fco = "!bash -c \"source /home/cj/bash.alias.sh; fzfco\""
@@ -77,7 +75,7 @@
 	# Use git-quick-stats if available.
 	quick-stats = "! if hash git-quick-stats &>/dev/null; then /home/cj/.local/bin/git-quick-stats; else printf 'Missing git-quick-stats!\nClone from: git://github.com/arzzen/git-quick-stats.git\n'"
 	# Show commits that haven't been pushed to remote yet.
-	# TODO: Add this feature to git-commands/git-remotes.sh.
+	# This is also a feature of `git-remotes`.
 	unpushed = "!gitunpushed() { local repo=${1:-welbornprod/dev}; git log --pretty=oneline $repo..HEAD; }; gitunpushed"
 	unpulled = "!gitunpulled() { local repo=${1:-welbornprod/dev}; local repoargs=`echo $repo | tr '/' ' '`; if git fetch $repoargs 1>/dev/null 2>/dev/null; then git log --pretty=oneline HEAD..$repo; else printf \"No changes for:$repo\\n\"; fi; }; gitunpulled"
 	# Show a diff for commits that haven't been pushed to remote yet.
@@ -86,9 +84,9 @@
 	issue = "!hub issue"
 	# Use `hub` to list issues with their full body text.
 	issues = "!hub issue -f '%n%sC%>(8)%i%Creset %t% l%n%Ccyan%b%Creset%n'"
-	mergedev = !git co master && git merge --no-ff dev && git co dev
-	# Like it says, switch to master, merge dev, push to remote, go back to dev.
-	mergedevpushmaster = !git co master && git merge --no-ff dev && git push && git co dev
+	m = merge
+	merg = merge
+	mergedev = !git co master && git merge dev && git co dev
 
 [credential "https://github.com"]
 	username=cjwelborn
@@ -97,4 +95,10 @@
 	tool = meld
 
 [merge]
+	# Always use --no-ff when merging.
+	ff = false
 	tool = meld
+
+[pull]
+	# Override merge.ff = false when pulling in changes.
+	ff = only
