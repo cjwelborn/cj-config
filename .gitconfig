@@ -29,8 +29,6 @@
 	# whatis should be called with a commit id.
 	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
-	# List all branches (also, you can use branches -a | -r).
-	branches = branch -v
 	# Hacky way to make fzf's git-related commands available as aliases.
 	# Browse, and checkout a branch.
 	fco = "!bash -c \"source /home/cj/bash.alias.sh; fzfco\""
@@ -86,8 +84,9 @@
 	issue = "!hub issue"
 	# Use `hub` to list issues with their full body text.
 	issues = "!hub issue -f '%n%sC%>(8)%i%Creset %t% l%n%Ccyan%b%Creset%n'"
-	merg = merge --no-ff
-	mergedev = !git co master && git merge --no-ff dev && git co dev
+	m = merge
+	merg = merge
+	mergedev = !git co master && git merge dev && git co dev
 
 [credential "https://github.com"]
 	username=cjwelborn
@@ -96,4 +95,10 @@
 	tool = meld
 
 [merge]
+	# Always use --no-ff when merging.
+	ff = false
 	tool = meld
+
+[pull]
+	# Override merge.ff = false when pulling in changes.
+	ff = only
