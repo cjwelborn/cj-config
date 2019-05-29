@@ -8,6 +8,7 @@ set nocompatible
 
 " Normal config here. --------------------------------------------------------
 filetype plugin indent on
+" Allow files to set their own vim settings.
 set modeline
 set clipboard=unnamedplus
 " No word wrapping.
@@ -21,10 +22,26 @@ set splitright
 set number
 " Use BASH for the shell, always.
 set shell=/bin/bash
+
 " Use a tabwidth of 4.
 " shiftwidth, smarttab, expandtab, etc. are set with vim-sleuth.
 " vim-sleuth will use this as a preference for hard-tabs.
 set tabstop=4
+" This is what I would set if vim-sleuth wasn't already taking care of it:
+"set tabstop=8
+"set shiftwidth=4
+"set softtabstop=4
+"set expandtab
+"set smarttab
+
+" Configurable variables for /usr/share/vim/vim74/indent/python.vim
+" Using expressions, so that shiftwidth can be changed later (with vim-sleuth probably).
+" Indent after an open paren (default: '&sw * 2'):
+let g:pyindent_open_paren = '&sw'
+" Indent after a nested paren (default: '&sw'):
+let g:pyindent_nested_paren = '&sw'
+" Indent for a continuation line (default: '&sw * 2'):
+let g:pyindent_continue = '&sw'
 
 " Load packages with pathogen ------------------------------------------------
 " Include the powerline binding directory.
