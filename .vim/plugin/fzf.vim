@@ -28,10 +28,10 @@ let g:loaded_fzf = 1
 
 let s:default_layout = { 'down': '~40%' }
 let s:layout_keys = ['window', 'up', 'down', 'left', 'right']
-let s:fzf_go = expand('<sfile>:h:h').'/bin/fzf'
+let s:fzf_go = expand('<sfile>:h:h').'/home/cj/clones/fzf/bin/fzf'
 let s:install = expand('<sfile>:h:h').'/install'
 let s:installed = 0
-let s:fzf_tmux = expand('<sfile>:h:h').'/bin/fzf-tmux'
+let s:fzf_tmux = expand('<sfile>:h:h').'/home/cj/clones/fzf/bin/fzf-tmux'
 
 let s:cpo_save = &cpo
 set cpo&vim

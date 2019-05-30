@@ -51,6 +51,8 @@ execute pathogen#infect('bundle/{}', 'bundle/powerline/powerline/bindings/{}')
 " Some key maps.. ------------------------------------------------------------
 " Nerd tree:
 :map <C-t> :NERDTreeToggle<CR>
+" FZF:
+:map <C-o> :FZF<CR>
 " Switch panes with the tab key.
 :map <Tab> <C-W>W
 
@@ -63,10 +65,10 @@ execute pathogen#infect('bundle/{}', 'bundle/powerline/powerline/bindings/{}')
 " 1)    The old method: <C-W><C-H/J/K/L>
 " 2)          Shortcut: <C-H/J/K/L>         (this mapping)
 " 3)       Even faster: <Alt-[arrow key]>   (the next mapping)
-:nnoremap <C-J> <C-W><C-J>
-:nnoremap <C-K> <C-W><C-K>
-:nnoremap <C-L> <C-W><C-L>
-:nnoremap <C-H> <C-W><C-H>
+" :nnoremap <C-J> <C-W><C-J>
+" :nnoremap <C-K> <C-W><C-K>
+" :nnoremap <C-L> <C-W><C-L>
+" :nnoremap <C-H> <C-W><C-H>
 
 " Use Alt + Arrow to move between panes
 " This provides the third of three different methods to move between panes:
