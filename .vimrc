@@ -43,16 +43,95 @@ let g:pyindent_nested_paren = '&sw'
 " Indent for a continuation line (default: '&sw * 2'):
 let g:pyindent_continue = '&sw'
 
+" Color scheme (vim-colors-solarized) ----------------------------------------
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+syntax enable
+colorscheme solarized
+set background=dark
+
+" Explicit syntax file types -------------------------------------------------
+au BufNewFile,BufRead *_sudoers_* set filetype=sudoers
+au BufNewFile,BufRead .pystartup set filetype=python
+
+" For line width -------------------------------------------------------------
+augroup line_width
+    autocmd!
+        " Highlight characters past column 79
+        " Original: autocmd FileType python,sh highlight Excess ctermbg=DarkGrey guibg=Black
+        autocmd BufWinEnter * highlight Excess ctermbg=DarkGrey guibg=Black
+        autocmd BufWinEnter * match Excess /\%79v.*/
+augroup end
+" Another type of 80 column marker:
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
+
+
 " Load packages with pathogen ------------------------------------------------
 " Include the powerline binding directory.
 execute pathogen#infect('bundle/{}', 'bundle/powerline/powerline/bindings/{}')
 
-
-" Some key maps.. ------------------------------------------------------------
-" Nerd tree:
+" NERDTree Config ------------------------------------------------------------
 :map <C-t> :NERDTreeToggle<CR>
-" FZF:
+" NERDTree, show hidden files by default.
+let g:NERDTreeShowHidden=1
+
+" NERDTree helpers.
+augroup nerd_tree
+    " Allow close if NERDTree is the only thing left open
+    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q| endif
+    " Open NERDTree automatically if no file is given.
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+augroup end
+
+" FZF Config: ----------------------------------------------------------------
 :map <C-o> :FZF<CR>
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Terminal launcher for GVim mainly, %s is replaced with fzf command
+let g:fzf_launcher = 'konsole -e bash -ic %s'
+
+" Default fzf layout - down / up / left / right
+let g:fzf_layout = { 'down': '~40%' }
+
+" Powerline Config: ----------------------------------------------------------
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
+set laststatus=2
+
+" Python-Mode (disabling in favor of jedi-vim). ------------------------------
+" let g:pymode_syntax_print_as_function = 1
+
+" JEDI-Vim Config: -----------------------------------------------------------
+" This is set to 1 by default,
+" but I am keeping it here in case I need to disable it.
+let g:jedi#auto_initialization = 1
+" jedi popup mode is "1", command-line is "2"
+let g:jedi#show_call_signatures = "1"
+" Enable/Disable completions (default is 1)
+let g:jedi#completions_enabled = 1
+" Disable preview window
+:set completeopt-=preview
+" Auto-close preview window.
+"augroup PreviewOnBottom
+"    autocmd InsertEnter * set splitbelow
+"    autocmd InsertLeave * set splitbelow!
+"augroup END
+
+" For vim-racer --------------------------------------------------------------
+if filereadable("/home/cj/.cargo/bin/racer")
+    set hidden
+    let g:racer_cmd = "/home/cj/.cargo/bin/racer"
+    autocmd FileType rust nmap gd <Plug>(rust-def)
+    autocmd FileType rust nmap gs <Plug>(rust-def-split)
+    autocmd FileType rust nmap gx <Plug>(rust-def-vertical)
+    autocmd FileType rust nmap <leader>gd <Plug>(rust-doc)
+endif
+" General Key Mapping: -------------------------------------------------------
 " Switch panes with the tab key.
 :map <Tab> <C-W>W
 
@@ -82,73 +161,3 @@ execute pathogen#infect('bundle/{}', 'bundle/powerline/powerline/bindings/{}')
 :map  <C-l> :tabn<CR>
 :map  <C-h> :tabp<CR>
 :map  <C-n> :tabnew<CR>
-
-" Color scheme (vim-colors-solarized) ----------------------------------------
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-syntax enable
-colorscheme solarized
-set background=dark
-
-" Explicit syntax file types -------------------------------------------------
-au BufNewFile,BufRead *_sudoers_* set filetype=sudoers
-au BufNewFile,BufRead .pystartup set filetype=python
-
-" For line width -------------------------------------------------------------
-augroup line_width
-	autocmd!
-        " Highlight characters past column 79
-        " Original: autocmd FileType python,sh highlight Excess ctermbg=DarkGrey guibg=Black
-        autocmd BufWinEnter * highlight Excess ctermbg=DarkGrey guibg=Black
-        autocmd BufWinEnter * match Excess /\%79v.*/
-augroup end
-" Another type of 80 column marker:
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%81v.\+/
-
-" NERDTree Config ------------------------------------------------------------
-" NERDTree, show hidden files by default.
-let g:NERDTreeShowHidden=1
-
-" NERDTree helpers.
-augroup nerd_tree
-	" Allow close if NERDTree is the only thing left open
-	autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q| endif
-	" Open NERDTree automatically if no file is given.
-	autocmd StdinReadPre * let s:std_in=1
-	autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-augroup end
-
-" For powerline --------------------------------------------------------------
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
-set laststatus=2
-
-" For python-mode (disabling in favor of jedi-vim). --------------------------
-" let g:pymode_syntax_print_as_function = 1
-
-" For jedi-vim ---------------------------------------------------------------
-" This is set to 1 by default,
-" but I am keeping it here in case I need to disable it.
-let g:jedi#auto_initialization = 1
-" jedi popup mode is "1", command-line is "2"
-let g:jedi#show_call_signatures = "1"
-" Enable/Disable completions (default is 1)
-let g:jedi#completions_enabled = 1
-" Disable preview window
-:set completeopt-=preview
-" Auto-close preview window.
-"augroup PreviewOnBottom
-"    autocmd InsertEnter * set splitbelow
-"    autocmd InsertLeave * set splitbelow!
-"augroup END
-
-" For vim-racer --------------------------------------------------------------
-if filereadable("/home/cj/.cargo/bin/racer")
-    set hidden
-    let g:racer_cmd = "/home/cj/.cargo/bin/racer"
-    autocmd FileType rust nmap gd <Plug>(rust-def)
-    autocmd FileType rust nmap gs <Plug>(rust-def-split)
-    autocmd FileType rust nmap gx <Plug>(rust-def-vertical)
-    autocmd FileType rust nmap <leader>gd <Plug>(rust-doc)
-endif
-
