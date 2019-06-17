@@ -35,22 +35,31 @@
     tabLength: 4
   "exception-reporting":
     userId: "8b661014-c9db-6395-961c-99202811dfd3"
+  github:
+    viewChangesForCurrentFileDiffPaneSplitDirection: "right"
   hyperclick:
     darwinTriggerKeys: "shiftKey"
     linuxTriggerKeys: "altKey"
     win32TriggerKeys: "altKey"
   linter: {}
+  "linter-clang":
+    clangDefaultCFlags: "-Wall -Wextra -Wfloat-equal -Winline -Wlogical-op -Wmissing-include-dirs -Wnull-dereference -Wpedantic -Wshadow -Wstrict-prototypes -Wunused-macros -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -D_GNU_SOURCE -std=c11"
+    clangDefaultCppFlags: "-Wall -Wextra -Wfloat-equal -Winline -Wlogical-op -Wmissing-include-dirs -Wnull-dereference -Wpedantic -Wshadow -Wunused-macros -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -std=c++14"
   "linter-eslint":
-    eslintrcPath: "/home/cj/.eslintrc.json"
-    globalNodePath: "/home/cj/.nvm/versions/node/v6.10.0"
+    global:
+      eslintrcPath: "/home/cj/.eslintrc.json"
+      globalNodePath: "/home/cj/.nvm/versions/node/v6.10.0"
+      useGlobalEslint: true
     lintHtmlFiles: true
-    useGlobalEslint: true
   "linter-flake8":
     ignoreErrorCodes: [
       "F811"
     ]
     maxLineLength: 78
   "linter-ui-default":
+    alwaysTakeMinimumSpace: true
+    panelHeight: 173
+    panelRepresents: "Entire Project"
     showPanel: true
   minimap:
     plugins:

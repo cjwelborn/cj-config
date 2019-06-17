@@ -6,6 +6,24 @@
     ]
   }
   {
+    title: "colr"
+    paths: [
+      "/home/cj/scripts/colr"
+    ]
+  }
+  {
+    title: "colr.sh"
+    paths: [
+      "/home/cj/scripts/bash/colr"
+    ]
+  }
+  {
+    title: "colr.h"
+    paths: [
+      "/home/cj/scripts/c/libs/colr"
+    ]
+  }
+  {
     title: "clones"
     paths: [
       "/home/cj/clones"
