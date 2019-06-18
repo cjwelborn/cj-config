@@ -1,0 +1,10 @@
+# Use Control-` to enter an escaped tilde (something I do often) -Cj.
+"\C-`": "\\`"
+"\C-x`": "\\`"
+# Redraw the current line, just testing some stuff out.
+"\C-x\C-d": redraw-current-line
+
+# These don't work with \C-x( and \C-x), probably got clobbered with my
+# other key bindings. The keys below work. Use \C-xe to recall the macro.
+"\C-x[": start-kbd-macro
+"\C-x]": end-kbd-macro
