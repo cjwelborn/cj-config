@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Code Folding: Fold All",
+        "command": "fold_by_level", "args": {"level": 1}
+    }
+]
