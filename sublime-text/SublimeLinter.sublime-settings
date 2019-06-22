@@ -1,0 +1,106 @@
+{
+
+    "debug": false,
+    "delay": 0.25,
+    "gutter_theme": "Circle",
+    "lint_mode": "background",
+    "linters": {
+        "clang": {
+            "disable": false,
+            "args": ["-std=c11", "-Wall", "-fsyntax-only", "-fno-caret-diagnostics", "-Wno-unknown-warning-option", "-Wliblto", "-Wall", "-Wextra", "-Wfloat-equal", "-Winline", "-Wlogical-op", "-Wimplicit-fallthrough", "-Wlogical-not-parentheses", "-Wmissing-include-dirs", "-Wnull-dereference", "-Wpedantic", "-Wshadow", "-Wstrict-prototypes", "-Wunused", "-U_FORTIFY_SOURCE", "-D_FORTIFY_SOURCE=2", "-D_GNU_SOURCE"],
+            "excludes": [],
+            "I": [
+                "/home/cj/clones/cpython",
+                "/home/cj/scripts/c/junk/anonymousstruct",
+                "/home/cj/scripts/c/libs/colr",
+                "/home/cj/scripts/c/libs/colr/test",
+                "/home/cj/scripts/c/examples/obj_test",
+                "/home/cj/scripts/c/examples/ooc/01",
+                "/home/cj/scripts/c/examples/ooc/02",
+                // "/home/cj/scripts/c/examples/ooc/03",
+                "/home/cj/scripts/c/examples/ooc/04",
+                "/home/cj/scripts/c/examples/ooc/05",
+                "/home/cj/scripts/c/examples/ooc/06",
+                "/home/cj/scripts/c/examples/ooc/07",
+                "/home/cj/scripts/c/examples/ooc/08",
+                "/home/cj/scripts/c/examples/ooc/09",
+                "/home/cj/scripts/c/examples/ooc/10",
+                "/home/cj/scripts/c/examples/ooc/11",
+                "/home/cj/scripts/c/examples/ooc/12",
+                "/home/cj/scripts/c/examples/ooc/13",
+                "/home/cj/scripts/c/examples/ooc/14",
+            ]
+        },
+        "clang++": {
+            "disable": false,
+            "args": ["-std=c++14", "-Wall", "-fsyntax-only", "-fno-caret-diagnostics", "-Wno-unknown-warning-option", "-Wliblto", "-Wall", "-Wextra", "-Wfloat-equal", "-Winline", "-Wlogical-op", "-Wimplicit-fallthrough", "-Wlogical-not-parentheses", "-Wmissing-include-dirs", "-Wnull-dereference", "-Wpedantic", "-Wshadow", "-Wstrict-prototypes", "-Wunused", "-U_FORTIFY_SOURCE", "-D_FORTIFY_SOURCE=2", "-D_GNU_SOURCE"],
+            "excludes": [],
+        },
+        "eslint": {
+            "disable": false,
+            "args": [],
+            "excludes": []
+        },
+        "flake8": {
+            "disable": false,
+            "args": [],
+            "builtins": "",
+            "excludes": [],
+            "executable": "",
+            "ignore": "W504",
+            "jobs": "2",
+            "max-complexity": 30,
+            "max-line-length": 80,
+            "select": "",
+            "show-code": true,
+        },
+        "golangcilint": {
+            "disable": false
+        },
+        "scss": {
+            "disable": false,
+            "args": [],
+            "exclude-linter": "",
+            "excludes": [],
+            "include-linter": ""
+        },
+        "shellcheck": {
+            "disable": false,
+            "args": [
+                "-x"
+            ],
+            "exclude": "",
+            "excludes": []
+        },
+        "sublimesyntax": {
+            "disable": false,
+            "args": [],
+            "excludes": []
+        }
+    },
+
+    "no_column_highlights_line": true,
+    "paths": {
+        "linux": [
+            "/home/cj/gems/bin",
+            "/home/cj/scripts/go/bin",
+            "/home/cj/.local/bin",
+            "/home/cj/.nvm/versions/node/v6.10.0/bin"
+        ],
+        "osx": [],
+        "windows": []
+    },
+    "show_hover_line_report": true,
+    "show_marks_in_minimap": true,
+    "show_panel_on_save": "view",
+    "syntax_map": {
+        "html (django)": "html",
+        "html (rails)": "html",
+        "html 5": "html",
+        "javascript (babel)": "javascript",
+        "magicpython": "python",
+        "php": "html",
+        "python django": "python",
+        "pythonimproved": "python"
+    },
+}

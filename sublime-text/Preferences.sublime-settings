@@ -1,6 +1,7 @@
 {
 	"auto_complete_on_tab": true,
 	"color_scheme": "Packages/Theme - Solarized Flat/Solarized Flat.tmTheme",
+	"draw_white_space": "selection",
 	"ensure_newline_at_eof_on_save": true,
 	"folder_exclude_patterns":
 	[
@@ -10,7 +11,10 @@
 		".svn",
 		".git",
 		".hg",
-		"CVS"
+		"CVS",
+		".golangci-*",
+		".golangcilint-*",
+		".gometalinter-*"
 	],
 	"font_face": "DejaVu Sans Mono for Powerline",
 	"font_options":
@@ -21,6 +25,9 @@
 	"highlight_line": true,
 	"ignored_packages":
 	[
+		"Deviot",
+		"Deviot (Arduino IDE)",
+		"Golang Tools Integration",
 		"Vintage"
 	],
 	"rulers":
@@ -29,7 +36,7 @@
 	],
 	"show_encoding": true,
 	"show_line_endings": true,
-	"theme": "Boxy Solarized Dark.sublime-theme",
+	"theme": "Flatland Dark.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": false

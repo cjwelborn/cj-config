@@ -1,0 +1,6 @@
+{
+    // "Filled", "outlined", "none", "underlined" (solid, strippled, squiggly), "colored text"
+    "style": "filled",
+    // Highlight-all style.
+    "ha_style": "none",
+}
