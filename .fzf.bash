@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Setup fzf
 # ---------
 if [[ ! "$PATH" == */home/cj/clones/fzf/bin* ]]; then

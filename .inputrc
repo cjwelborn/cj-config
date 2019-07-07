@@ -8,3 +8,6 @@
 # other key bindings. The keys below work. Use \C-xe to recall the macro.
 "\C-x[": start-kbd-macro
 "\C-x]": end-kbd-macro
+
+# Don't clobber the global inputrc. I still need Ctrl + Arrow to do the right thing.
+$include /etc/inputrc
