@@ -7,34 +7,69 @@
     "linters": {
         "clang": {
             "disable": false,
-            "args": ["-std=c11", "-Wall", "-fsyntax-only", "-fno-caret-diagnostics", "-Wno-unknown-warning-option", "-Wliblto", "-Wall", "-Wextra", "-Wfloat-equal", "-Winline", "-Wlogical-op", "-Wimplicit-fallthrough", "-Wlogical-not-parentheses", "-Wmissing-include-dirs", "-Wnull-dereference", "-Wpedantic", "-Wshadow", "-Wstrict-prototypes", "-Wunused", "-U_FORTIFY_SOURCE", "-D_FORTIFY_SOURCE=2", "-D_GNU_SOURCE"],
+            "args": [
+                "-std=gnu11",
+                "-fsyntax-only",
+                "-fno-caret-diagnostics",
+                "-Wall",
+                "-Wno-unknown-warning-option",
+                "-Wliblto",
+                "-Wall",
+                "-Wenum-compare",
+                "-Wextra",
+                "-Wfloat-equal",
+                "-Winline",
+                "-Wlogical-op",
+                "-Wimplicit-fallthrough",
+                "-Wlogical-not-parentheses",
+                "-Wmissing-include-dirs",
+                "-Wnull-dereference",
+                "-Wpedantic",
+                "-Wshadow",
+                "-Wstrict-prototypes",
+                "-Wunused",
+                "-U_FORTIFY_SOURCE",
+                "-D_FORTIFY_SOURCE=2",
+                "-D_GNU_SOURCE",
+                "-DDEBUG=1"
+            ],
             "excludes": [],
             "I": [
                 "/home/cj/clones/cpython",
                 "/home/cj/scripts/c/junk/anonymousstruct",
                 "/home/cj/scripts/c/libs/colr",
-                "/home/cj/scripts/c/libs/colr/test",
-                "/home/cj/scripts/c/examples/obj_test",
-                "/home/cj/scripts/c/examples/ooc/01",
-                "/home/cj/scripts/c/examples/ooc/02",
-                // "/home/cj/scripts/c/examples/ooc/03",
-                "/home/cj/scripts/c/examples/ooc/04",
-                "/home/cj/scripts/c/examples/ooc/05",
-                "/home/cj/scripts/c/examples/ooc/06",
-                "/home/cj/scripts/c/examples/ooc/07",
-                "/home/cj/scripts/c/examples/ooc/08",
-                "/home/cj/scripts/c/examples/ooc/09",
-                "/home/cj/scripts/c/examples/ooc/10",
-                "/home/cj/scripts/c/examples/ooc/11",
-                "/home/cj/scripts/c/examples/ooc/12",
-                "/home/cj/scripts/c/examples/ooc/13",
-                "/home/cj/scripts/c/examples/ooc/14",
+                "/home/cj/scripts/c/libs/colr/examples",
+                "/home/cj/scripts/c/libs/colr/test"
             ]
         },
         "clang++": {
             "disable": false,
-            "args": ["-std=c++14", "-Wall", "-fsyntax-only", "-fno-caret-diagnostics", "-Wno-unknown-warning-option", "-Wliblto", "-Wall", "-Wextra", "-Wfloat-equal", "-Winline", "-Wlogical-op", "-Wimplicit-fallthrough", "-Wlogical-not-parentheses", "-Wmissing-include-dirs", "-Wnull-dereference", "-Wpedantic", "-Wshadow", "-Wstrict-prototypes", "-Wunused", "-U_FORTIFY_SOURCE", "-D_FORTIFY_SOURCE=2", "-D_GNU_SOURCE"],
-            "excludes": [],
+            "args": [
+                "-std=c++14",
+                "-Wall",
+                "-fsyntax-only",
+                "-fno-caret-diagnostics",
+                "-Wno-unknown-warning-option",
+                "-Wliblto",
+                "-Wall",
+                "-Wextra",
+                "-Wfloat-equal",
+                "-Winline",
+                "-Wlogical-op",
+                "-Wimplicit-fallthrough",
+                "-Wlogical-not-parentheses",
+                "-Wmissing-include-dirs",
+                "-Wnull-dereference",
+                "-Wpedantic",
+                "-Wshadow",
+                "-Wstrict-prototypes",
+                "-Wunused",
+                "-U_FORTIFY_SOURCE",
+                "-D_FORTIFY_SOURCE=2",
+                "-D_GNU_SOURCE",
+                "-DDEBUG=1"
+            ],
+            "excludes": []
         },
         "eslint": {
             "disable": false,
@@ -52,7 +87,7 @@
             "max-complexity": 30,
             "max-line-length": 80,
             "select": "",
-            "show-code": true,
+            "show-code": true
         },
         "golangcilint": {
             "disable": false
@@ -102,5 +137,5 @@
         "php": "html",
         "python django": "python",
         "pythonimproved": "python"
-    },
+    }
 }
