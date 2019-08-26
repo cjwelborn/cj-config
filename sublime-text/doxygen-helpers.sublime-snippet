@@ -1,0 +1,10 @@
+<snippet>
+    <content><![CDATA[
+\internal
+${1:[internal comment]}
+\endinternal
+]]></content>
+    <tabTrigger>\internal</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.c</scope>
+</snippet>

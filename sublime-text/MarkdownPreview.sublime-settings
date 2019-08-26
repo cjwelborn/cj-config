@@ -1,0 +1,5 @@
+{
+    "parser": "github",
+    "github_inject_header_ids": true,
+    "enable_highlight": true
+}

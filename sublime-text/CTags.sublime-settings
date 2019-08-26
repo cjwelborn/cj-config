@@ -1,0 +1,15 @@
+{
+    "tag_file": "tags",
+    "autocomplete": true,
+    "opts" : [
+        "--exclude=makefile",
+        "--exclude=coverage",
+        "--exclude=doc_style",
+        "--exclude=docs",
+        "--exclude=examples",
+        "--exclude=tools",
+        "--exclude=test/snow.*",
+        "--exclude=test/*.sh",
+        "--exclude=test/*.py"
+    ]
+}

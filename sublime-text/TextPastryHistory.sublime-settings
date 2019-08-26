@@ -1,0 +1,287 @@
+{
+	"history":
+	[
+		{
+			"data":
+			{
+				"args":
+				{
+					"text": "this is not really a test",
+					"threshold": 3
+				},
+				"command": "text_pastry_insert_text",
+				"text": "this is not really a test"
+			},
+			"key": "2818c94ffcce6ea231a11359fc88b3de",
+			"label": "this is not really a test"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"clipboard": true,
+					"separator": "\\n"
+				},
+				"command": "text_pastry_insert_text",
+				"text": "\\p(\\n)"
+			},
+			"key": "f78a6d8366a120f4c5af029331ba568c",
+			"label": "\\p(\\n)"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"text": "\\pn",
+					"threshold": 3
+				},
+				"command": "text_pastry_insert_text",
+				"text": "\\pn"
+			},
+			"key": "2c8cae3e5a497fb9c9cf443641ec640f",
+			"label": "\\pn"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"context": null,
+					"operator": null,
+					"pattern": "ColorType"
+				},
+				"command": "text_pastry_modify_selection",
+				"text": "find ColorType"
+			},
+			"key": "43101dfa19aec06865b80a49dd3e7302",
+			"label": "find ColorType"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"clipboard": true,
+					"regex": true,
+					"separator": "[kst]"
+				},
+				"command": "text_pastry_insert_text",
+				"text": "regex [kst]"
+			},
+			"key": "4ac518da740b94e8623edc0714e62a8d",
+			"label": "regex [kst]"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"clipboard": true,
+					"regex": true,
+					"separator": "c"
+				},
+				"command": "text_pastry_insert_text",
+				"text": "regex c"
+			},
+			"key": "249bc966dfa431febec2b81d52a11f88",
+			"label": "regex c"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"text": "\\regex [ksc]",
+					"threshold": 3
+				},
+				"command": "text_pastry_insert_text",
+				"text": "\\regex [ksc]"
+			},
+			"key": "d6fcd9e7b250f557c3f9366049f7dad9",
+			"label": "\\regex [ksc]"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"clipboard": true,
+					"regex": true,
+					"separator": "k"
+				},
+				"command": "text_pastry_insert_text",
+				"text": "regex k"
+			},
+			"key": "6e2ac9a55b1920ea8e724956f7d2c488",
+			"label": "regex k"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"clipboard": true,
+					"separator": "\\n"
+				},
+				"command": "text_pastry_insert_text",
+				"text": "pn"
+			},
+			"key": "ded0804cf804b6d26e37953dc2dbc505",
+			"label": "pn"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"context": null,
+					"operator": null,
+					"pattern": "keep"
+				},
+				"command": "text_pastry_modify_selection",
+				"text": "find keep"
+			},
+			"key": "039915a7bae27f4b88021d032f55b868",
+			"label": "find keep"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"clipboard": true,
+					"regex": true,
+					"separator": "(k)"
+				},
+				"command": "text_pastry_insert_text",
+				"text": "regex (k)"
+			},
+			"key": "bc849e36b3c54d411e59df3946d8520f",
+			"label": "regex (k)"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"context": null,
+					"operator": null,
+					"pattern": "[kcs]"
+				},
+				"command": "text_pastry_modify_selection",
+				"text": "find [kcs]"
+			},
+			"key": "0a0724f8b067d7c6f791c7b1a4fcebfa",
+			"label": "find [kcs]"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"text": "ColorArg_from_value",
+					"threshold": 3
+				},
+				"command": "text_pastry_insert_text",
+				"text": "ColorArg_from_value"
+			},
+			"key": "0184620474bcd2d93c0b56951650d687",
+			"label": "ColorArg_from_value"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"text": "ColorValue_from_value",
+					"threshold": 3
+				},
+				"command": "text_pastry_insert_text",
+				"text": "ColorValue_from_value"
+			},
+			"key": "3e986bc3a365901442952d07e89d1cb0",
+			"label": "ColorValue_from_value"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"text": "ColorValue_from_str",
+					"threshold": 3
+				},
+				"command": "text_pastry_insert_text",
+				"text": "ColorValue_from_str"
+			},
+			"key": "21c4f1c6d471083682ed9f37d94cd02c",
+			"label": "ColorValue_from_str"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"context": "selection",
+					"operator": null,
+					"pattern": "\\{\\}"
+				},
+				"command": "text_pastry_modify_selection",
+				"text": "filter \\{\\}"
+			},
+			"key": "784d16deac10367d16c25ea5e1d998f9",
+			"label": "filter \\{\\}"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"context": "selection",
+					"operator": null,
+					"pattern": "\\.format\\(.+\\)"
+				},
+				"command": "text_pastry_modify_selection",
+				"text": "filter \\.format\\(.+\\)"
+			},
+			"key": "c621eb110c69be6a6109e39b4875a649",
+			"label": "filter \\.format\\(.+\\)"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"clipboard": true
+				},
+				"command": "text_pastry_insert_text",
+				"text": "\\p"
+			},
+			"key": "ceb8141b2b1d05fb9539bc1381b58745",
+			"label": "\\p"
+		},
+		{
+			"data":
+			{
+				"args":
+				{
+					"clipboard": true
+				},
+				"command": "text_pastry_insert_text",
+				"text": "p"
+			},
+			"key": "83878c91171338902e0fe0fb97a8c47a",
+			"label": "p"
+		}
+	],
+	"last_command":
+	{
+		"args":
+		{
+			"clipboard": true
+		},
+		"command": "text_pastry_insert_text",
+		"text": "p"
+	}
+}

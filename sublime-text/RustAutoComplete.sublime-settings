@@ -1,0 +1,6 @@
+{
+    "racer": "/home/cj/.cargo/bin/racer",
+    "search_paths": [
+        "/home/cj/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"
+    ]
+}
