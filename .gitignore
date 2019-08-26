@@ -17,3 +17,6 @@ __pycache__
 *.pyc
 .mypy_cache
 *.swp
+*.o
+tags
+tags_sorted_by_file
