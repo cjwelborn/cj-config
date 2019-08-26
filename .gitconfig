@@ -37,12 +37,18 @@
 	# Browse, and show a specific commit.
 	fshow = "!bash -c \"source /home/cj/bash.alias.sh; fzfshow\""
 
-	# Commits all files that are already added to the repo, with a short msg.
-	commit-tracked = commit -am
-	ct = commit -am
 	# Commits all files that are already added to the repo, using `core.editor` for the msg.
 	commit-longmsg = commit -a
 	cl = commit -a
+	# Select changes to commit
+	commit-patch = commit -p
+	cp = commit -p
+	# Select changes to commit with a message.
+	commit-patch-msg = commit -pm
+	cpm = commit -pm
+	# Commits all files that are already added to the repo, with a short msg.
+	commit-tracked = commit -am
+	ct = commit -am
 	# Print a command, and then run it. The command is ran in the current shell.
 	run = "!printf \"%s \" \"$@\"; printf \"\n\"; bash -c \"$@\""
 
@@ -50,9 +56,29 @@
     last-commit = show --pretty=oneline
 	# List the last 10 commits, Usage: last-commits [revision] [number]
 	# If only a number is given, or no arguments are given, then HEAD is used.
-	last-commits = "!gitlog() { local rev=${1:-HEAD} num=${2:-10}; if echo $rev | egrep -q '^[0-9]+$'; then num=$rev; rev=HEAD; fi; git log --pretty=oneline $rev | head -n $num; }; gitlog"
+	last-commits = "!gitlog() { local rev=${1:-HEAD} num=${2:-10}; if echo $rev | egrep -q '^[0-9]+$'; then num=$rev; rev=HEAD; fi; git log --graph --pretty=oneline $rev | head -n $num; }; gitlog"
 	# List all commits.
-	show-commits = log --pretty=oneline
+	show-commits = log --graph --pretty=oneline
+	# More complicated than it has to be,
+	# but running without arguments should tell you what it does.
+	squashi = "!python3 -c '\
+import os, sys \n\
+if not sys.argv[1:]:\n\
+    print(\"\"\"\n\
+This is just a git alias for: git rebase -i HEAD~NUM. \n\
+\n\
+Usage: \n\
+    git squashi NUM \n\
+\n\
+Options: \n\
+    NUM  : Number of commits to squash (HEAD~NUM). \n\
+\"\"\", \n\
+    file=sys.stderr) \n\
+    sys.exit(1) \n\
+num=sys.argv[1] \n\
+cmd=f\"git rebase -i HEAD~{num}\" \n\
+sys.exit(os.system(cmd)) \n\
+'"
 	# Pure aliases, for typing reasons.
 	co = checkout
 	stat = status
