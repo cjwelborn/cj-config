@@ -8,6 +8,8 @@
     -Christopher Welborn 05-16-2019
 """
 
+# I use dreampie with python2.7 sometimes.
+from __future__ import print_function
 # Code is cleverfied so I only have to update the import list,
 # nothing else.
 import os
@@ -168,9 +170,14 @@ def read_file(filename):
         return f.read()
 
 
-def run_command(*args, background=False, **kwargs):
+def run_command(*args, **kwargs):
     """ Shortcut to subprocess.check_output(). """
     print('\nRunning: {}\n'.format(' '.join(args)))
+    try:
+        background = kwargs.get('background', False)
+        kwargs.pop('background')
+    except KeyError:
+        pass
     if background:
         # Command may open a new konsole or window. It needs to stay alive.
         return subprocess.Popen(args, **kwargs)  # noqa (implicitly imported)
