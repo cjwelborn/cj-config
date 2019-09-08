@@ -149,7 +149,8 @@ for filepath in "${userargs[@]}"; do
         continue
     }
     if ln -s "$filepath" "$destpath"; then
-        echo_file_op "Linked" "$filepath -> $destpath"
+        echo_file_op "Linked" "$filepath"
+        echo_file_op "->" "$destpath"
     else
         echo_err "Failed to create symlink: $destpath"
         let errs+=1
